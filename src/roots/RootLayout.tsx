@@ -46,6 +46,7 @@ const RootLayout: FC = (): React.JSX.Element => {
                 </TooltipTrigger>
                 <TooltipContent side="right">Home</TooltipContent>
               </Tooltip>
+
               <Tooltip>
                 <TooltipTrigger asChild>
                   <NavLink
@@ -63,20 +64,6 @@ const RootLayout: FC = (): React.JSX.Element => {
               <Tooltip>
                 <TooltipTrigger asChild>
                   <NavLink
-                    to="cropper"
-                    className={cn(
-                      "flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-                    )}
-                  >
-                    <Crop className="h-5 w-5" />
-                    <span className="sr-only">Crop image</span>
-                  </NavLink>
-                </TooltipTrigger>
-                <TooltipContent side="right">Crop image</TooltipContent>
-              </Tooltip>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <NavLink
                     to={"b64toimage"}
                     className={cn(
                       "flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
@@ -87,6 +74,20 @@ const RootLayout: FC = (): React.JSX.Element => {
                   </NavLink>
                 </TooltipTrigger>
                 <TooltipContent side="right">b64toimage</TooltipContent>
+              </Tooltip>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <NavLink
+                    to="cropper"
+                    className={cn(
+                      "flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                    )}
+                  >
+                    <Crop className="h-5 w-5" />
+                    <span className="sr-only">Crop image</span>
+                  </NavLink>
+                </TooltipTrigger>
+                <TooltipContent side="right">Crop image</TooltipContent>
               </Tooltip>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -142,19 +143,20 @@ const RootLayout: FC = (): React.JSX.Element => {
                       <FileOutput className="h-5 w-5" />
                       image2b64
                     </NavLink>
-                    <NavLink
-                      to="cropper"
-                      className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                    >
-                      <Crop className="h-5 w-5" />
-                      Crop image
-                    </NavLink>
+
                     <NavLink
                       to={"b64toimage"}
                       className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
                     >
                       <FileInput className="h-5 w-5" />
                       b64toimage
+                    </NavLink>
+                    <NavLink
+                      to="cropper"
+                      className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                    >
+                      <Crop className="h-5 w-5" />
+                      Crop image
                     </NavLink>
                     <NavLink
                       to={"filters"}

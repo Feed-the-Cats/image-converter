@@ -1,32 +1,79 @@
+import { cn } from "@/lib/utils";
 import React, { FC } from "react";
 
 const Home: FC = (): React.JSX.Element => {
   return (
-    <div className="flex h-screen w-full items-center justify-center">
-      <h1 className="text-4xl font-bold">Image Converter</h1>
-      <p>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Soluta in
-        necessitatibus aliquam sequi a suscipit ad esse eum iste placeat.
-        Accusantium laboriosam nobis eius aliquam deleniti quas. Repudiandae qui
-        dolores architecto quaerat praesentium consectetur, laboriosam obcaecati
-        at eveniet libero, incidunt enim pariatur eius, quod sunt. Eveniet quasi
-        hic praesentium. Dolor natus dolorem delectus soluta saepe rem
-        consectetur nemo non debitis porro? Dicta accusantium soluta error,
-        pariatur aliquid aspernatur iste id, earum velit perferendis
-        consequuntur, esse facere. Distinctio ab aliquid rem rerum, amet omnis
-        deserunt sed dicta eligendi obcaecati quasi. Quasi nulla doloremque
-        dolorum accusamus quis sapiente? Temporibus, atque natus. Voluptas rerum
-        in provident dolorem modi magni fuga veritatis voluptate, neque ea.
-        Voluptatibus, rerum dolor tempora quas dolores quam eius cum. Cum ab
-        nihil odio hic dolorem placeat fuga ipsam nisi vel quibusdam ducimus
-        alias veniam a obcaecati excepturi nemo sed iure laboriosam ex sequi
-        repellat recusandae iusto, rerum culpa. Non et velit, ut ullam, debitis
-        quia incidunt natus porro dolore necessitatibus quaerat illum atque nisi
-        similique esse iste error quibusdam. Sed illo nemo aliquam repudiandae.
-        Voluptate non ad quaerat labore quis. Repellendus dolore, ex, mollitia
-        deleniti itaque eum iure aut dolores voluptates dicta, architecto
-        quaerat dolor debitis soluta consectetur eos.
-      </p>
+    <div
+      className={cn(
+        "flex flex-col h-screen w-full items-center justify-center"
+      )}
+    >
+      <header className="w-full text-white text-center py-4">
+        <h1 className="text-3xl">Welcome to Image Converter</h1>
+      </header>
+      <div className="max-w-4xl  p-4">
+        <p className="mb-4">
+          Transform and enhance your images with ease using our online tool.
+          Whether you need to convert images between different formats, apply
+          artistic filters, or crop images for a perfect result, Image Converter
+          is here for you.
+        </p>
+
+        <h2 className="text-2xl text-sky-400 mb-2">Main Features:</h2>
+
+        <h3 className="text-xl text-sky-400 mt-4 mb-2">Image Conversion</h3>
+        <ul className="list-disc list-inside mb-4">
+          <li>
+            <strong>From base64 to file</strong>: Easily convert your base64
+            image strings into usable image files.
+          </li>
+          <li>
+            <strong>From file to base64</strong>: Transform your image files
+            into base64 strings for easy integration into your web projects and
+            applications.
+          </li>
+        </ul>
+
+        <h3 className="text-xl text-sky-400 mt-4 mb-2">Image Editing</h3>
+        <ul className="list-disc list-inside mb-4">
+          <li>
+            <strong>Filter application</strong>: Add an artistic touch to your
+            photos with our varied and intuitive filters.
+          </li>
+          <li>
+            <strong>Crop</strong>: Adjust the framing of your images to
+            highlight important details.
+          </li>
+        </ul>
+
+        <h3 className="text-xl text-sky-400 mt-4 mb-2">Download and Edit</h3>
+        <ul className="list-disc list-inside mb-4">
+          <li>
+            <strong>Download an image</strong>: Import your images to edit them
+            directly on our platform.
+          </li>
+          <li>
+            <strong>Filters and cropping</strong>: Apply filters or crop your
+            images without needing to convert them.
+          </li>
+        </ul>
+
+        <h2 className="text-2xl text-sky-400 mt-4 mb-2">
+          Why Choose Image Converter?
+        </h2>
+        <ul className="list-disc list-inside mb-4">
+          <li>
+            <strong>Ease of use</strong>: Our user-friendly interface allows you
+            to transform and enhance your images in just a few clicks.
+          </li>
+          <li>
+            <strong>Flexibility</strong>: Whether you are a developer, designer,
+            or photography enthusiast, our tool meets your specific needs.
+          </li>
+        </ul>
+
+        <h2 className="text-2xl text-sky-400 mt-4 mb-4">Get Started Now</h2>
+      </div>
     </div>
   );
 };

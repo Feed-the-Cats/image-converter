@@ -120,7 +120,8 @@ const CropperView: FC = (): React.JSX.Element => {
           </Button>
         </div>
       </CardHeader>
-      <CardContent className="grid gap-4 justify-items-center">
+      // "grid gap-4 justify-items-center"
+      <CardContent className="flex flex-col gap-4 justify-items-center">
         <div className={cn("w-full h-[600px] relative")}>
           <Cropper
             ref={cropperRef}
