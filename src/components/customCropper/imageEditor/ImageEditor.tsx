@@ -1,5 +1,5 @@
 import cn from "classnames";
-import { useRef, useState } from "react";
+import { RefObject, useState } from "react";
 import {
   Cropper,
   CropperPreviewRef,
@@ -8,10 +8,12 @@ import {
 } from "react-advanced-cropper";
 //import { AdjustablePreviewBackground } from '../adjustablePreviewBackground/AdjustablePreviewBackground';
 import { ResetIcon } from "@/assets/icons/ResetIcon";
+import { origine } from "@/store/store";
+import { useAtomValue } from "jotai";
 import "react-advanced-cropper/dist/style.css";
 import { AdjustableCropperBackground } from "../adjustableCropperBackground/AdjustableCropperBackground";
 import { Button } from "../button/Button";
-import { Navigation } from "../navigation/Navigation";
+import { Navigation } from "../navigation/NavigationCrop";
 import { Slider } from "../slider/Slider";
 import "./ImageEditor.css";
 
@@ -29,22 +31,34 @@ type adjusmentType = {
   contrast: number;
 };
 
-export const ImageEditor = () => {
-  const cropperRef = useRef<CropperRef>(null);
-  const previewRef = useRef<CropperPreviewRef>(null);
+export type allRefsType = {
+  cropperRef: RefObject<CropperRef>;
+  previewRef: RefObject<CropperPreviewRef>;
+};
+type Props = {
+  img: string;
+  downloadImage: () => void;
+  allRefs: allRefsType;
+};
 
-  const [src, setSrc] = useState(
-    "/react-advanced-cropper/img/images/pexels-photo-4383577.jpeg"
+export const ImageEditor: React.FC<Props> = ({
+  img,
+  downloadImage,
+  allRefs,
+}) => {
+  const [src] = useState(img);
+  const originePage = useAtomValue(origine);
+  const [mode, setMode] = useState(
+    originePage === "imageUri" || "blob" || "cropper" ? "crop" : "saturation"
   );
-
-  const [mode, setMode] = useState("crop");
-
   const [adjustments, setAdjustments] = useState<adjusmentType>({
     brightness: 0,
     hue: 0,
     saturation: 0,
     contrast: 0,
   });
+
+  const { cropperRef, previewRef } = allRefs;
 
   const onChangeValue = (value: number) => {
     if (mode in adjustments) {
@@ -65,22 +79,22 @@ export const ImageEditor = () => {
     });
   };
 
-  const onUpload = (blob: string) => {
-    onReset();
-    setMode("crop");
-    setSrc(blob);
-  };
+  /*     const onUpload = (blob: string) => {
+      onReset();
+      setMode("crop");
+      setSrc(blob);
+    }; */
 
-  const onDownload = () => {
-    if (cropperRef.current) {
-      const newTab = window.open();
-      if (newTab) {
-        newTab.document.body.innerHTML = `<img src="${cropperRef.current
-          .getCanvas()
-          ?.toDataURL()}"/>`;
+  /*     const onDownload = () => {
+      if (cropperRef?.current) {
+        const newTab = window.open();
+        if (newTab) {
+          newTab.document.body.innerHTML = `<img src="${cropperRef?.current
+            .getCanvas()
+            ?.toDataURL()}"/>`;
+        }
       }
-    }
-  };
+    }; */
 
   const onUpdate = () => {
     previewRef.current?.refresh();
@@ -101,8 +115,8 @@ export const ImageEditor = () => {
     top: 0,
   }; */
 
-  /*   if (cropperRef.current) {
-    cropperRef.current.setCoordinates({
+  /*   if (cropperRef?.current) {
+    cropperRef?.current.setCoordinates({
       width: cropperRef?.current.getCanvas()?.width,
       height: cropperRef?.current.getCanvas()?.height,
       left: 0,
@@ -156,7 +170,7 @@ export const ImageEditor = () => {
         )}
         {/*         <CropperPreview
           className={'image-editor__preview'}
-          ref={previewRef}
+          cropperRef={previewRef}
           cropper={cropperRef}
           backgroundComponent={AdjustablePreviewBackground}
           backgroundProps={adjustments}
@@ -174,8 +188,8 @@ export const ImageEditor = () => {
       <Navigation
         mode={mode}
         onChange={setMode}
-        onUpload={onUpload}
-        onDownload={onDownload}
+        // onUpload={onUpload}
+        onDownload={downloadImage}
       />
     </div>
   );

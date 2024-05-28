@@ -5,4 +5,6 @@ export const image64 = atom("");
 export const imagePreview = atom("");
 export const imageType = atom("");
 export const isElementsDisabled = atom(false);
-export const origine = atom<"imageUri" | "cropper" | "blob" | null>(null);
+export const origine = atom<"imageUri" | "cropper" | "blob" | "filter" | null>(
+  null
+);

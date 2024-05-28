@@ -6,12 +6,15 @@ import React, {
   useRef,
 } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { useAtomValue } from "jotai";
+import { origine } from "@/store/store";
 
 type propsType = ComponentPropsWithoutRef<"canvas">;
 export const Canvas = ({
   src,
   ...props
 }: { src: string } & propsType): React.JSX.Element => {
+  const originePage = useAtomValue(origine);
   const ref = useRef<HTMLCanvasElement | null>(null);
   const [value, setValue] = React.useState(0);
 

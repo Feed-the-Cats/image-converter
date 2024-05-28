@@ -1,6 +1,6 @@
-import React, { PureComponent } from "react";
 import cn from "classnames";
-import "@/Slider.css";
+import React, { PureComponent } from "react";
+import "./Slider.css";
 
 interface Props {
   className?: string;

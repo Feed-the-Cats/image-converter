@@ -4,7 +4,7 @@
   border-top: solid 1px #2b2a30;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   padding-left: 16px;
   padding-right: 16px;
 }

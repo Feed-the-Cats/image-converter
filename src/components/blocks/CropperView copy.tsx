@@ -6,19 +6,21 @@ import toastConfig from "@/lib/toastonfig";
 import { cn } from "@/lib/utils";
 import { imagePreview, imageSource, imageType, origine } from "@/store/store";
 import { useAtomValue, useSetAtom } from "jotai";
-import { FC, JSX, useRef, useState } from "react";
+import { FC, useRef, useState } from "react";
 import {
+  CircleStencil,
   Coordinates,
+  Cropper,
   CropperPreview,
   CropperPreviewRef,
   CropperRef,
+  RectangleStencil,
 } from "react-advanced-cropper";
 import "react-advanced-cropper/dist/style.css";
 import { toast } from "react-toastify";
-import { ImageEditor } from "../customCropper/imageEditor/ImageEditor";
 //import "react-advanced-cropper/dist/themes/compact.css";
 
-const CropperView: FC = (): JSX.Element => {
+const CropperView: FC = (): React.JSX.Element => {
   const img = useAtomValue(imageSource);
   const originePage = useAtomValue(origine);
   const type = useAtomValue(imageType);
@@ -30,11 +32,6 @@ const CropperView: FC = (): JSX.Element => {
   const [tencil, setTencil] = useState<"avatar" | "rectangle">("rectangle");
   const setClearImage = useClearImage();
 
-  const allRefs = {
-    cropperRef: cropperRef,
-    previewRef: previewRef,
-  };
-
   const actionButtonsClass =
     "w-full bg-[var(--background-action-button)] text-background-invert hover:text-background hover:bg-orange-800 dark:bg-orange-800/30 dark:hover:bg-orange-800 dark:hover:text-white";
 
@@ -43,10 +40,10 @@ const CropperView: FC = (): JSX.Element => {
     setCropperImage(cropper.getCanvas()?.toDataURL());
   };
 
-  /*   const onUpdate = () => {
+  const onUpdate = () => {
     previewRef.current?.refresh();
   };
- */
+
   const downloadBlobCallback = (blob: Blob | null) => {
     if (blob) {
       const blobUrl = URL.createObjectURL(blob);
@@ -77,7 +74,6 @@ const CropperView: FC = (): JSX.Element => {
   };
 
   const downloadImage = () => {
-    console.log(cropperRef.current);
     cropperRef.current && originePage === "imageUri"
       ? cropImage()
       : cropperRef.current && originePage === "cropper"
@@ -124,10 +120,10 @@ const CropperView: FC = (): JSX.Element => {
           </Button>
         </div>
       </CardHeader>
-      {/* "grid gap-4 justify-items-center" */}
+      // "grid gap-4 justify-items-center"
       <CardContent className="flex flex-col gap-4 justify-items-center">
         <div className={cn("w-full h-[600px] relative")}>
-          {/*           <Cropper
+          <Cropper
             ref={cropperRef}
             src={img}
             className={cn("cropper", "w-full h-[600px]")}
@@ -140,11 +136,6 @@ const CropperView: FC = (): JSX.Element => {
             stencilComponent={
               tencil === "avatar" ? CircleStencil : RectangleStencil
             }
-          /> */}
-          <ImageEditor
-            img={img}
-            allRefs={allRefs}
-            downloadImage={downloadImage}
           />
         </div>
         <div className={cn("w-full h-80 p-5 flex justify-center items-center")}>
