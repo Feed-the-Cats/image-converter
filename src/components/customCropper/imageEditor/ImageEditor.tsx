@@ -1,5 +1,5 @@
 import cn from "classnames";
-import { RefObject, useState } from "react";
+import { RefObject, useEffect, useState } from "react";
 import {
   Cropper,
   CropperPreviewRef,
@@ -8,7 +8,7 @@ import {
 } from "react-advanced-cropper";
 //import { AdjustablePreviewBackground } from '../adjustablePreviewBackground/AdjustablePreviewBackground';
 import { ResetIcon } from "@/assets/icons/ResetIcon";
-import { origine } from "@/store/store";
+import { asFilterActive, imageSource, origine } from "@/store/store";
 import { useAtomValue } from "jotai";
 import "react-advanced-cropper/dist/style.css";
 import { AdjustableCropperBackground } from "../adjustableCropperBackground/AdjustableCropperBackground";
@@ -36,7 +36,7 @@ export type allRefsType = {
   previewRef: RefObject<CropperPreviewRef>;
 };
 type Props = {
-  img: string;
+  img?: string;
   downloadImage: () => void;
   allRefs: allRefsType;
 };
@@ -46,11 +46,11 @@ export const ImageEditor: React.FC<Props> = ({
   downloadImage,
   allRefs,
 }) => {
-  const [src] = useState(img);
+  /* const [src] = useState(img); */
   const originePage = useAtomValue(origine);
-  const [mode, setMode] = useState(
-    originePage === "imageUri" || "blob" || "cropper" ? "crop" : "saturation"
-  );
+  const isFilterActive = useAtomValue(asFilterActive);
+  const [mode, setMode] = useState(isFilterActive ? "saturation" : "crop");
+  const image = useAtomValue(imageSource);
   const [adjustments, setAdjustments] = useState<adjusmentType>({
     brightness: 0,
     hue: 0,
@@ -70,7 +70,7 @@ export const ImageEditor: React.FC<Props> = ({
   };
 
   const onReset = () => {
-    setMode("crop");
+    setMode(isFilterActive ? "saturation" : "crop");
     setAdjustments({
       brightness: 0,
       hue: 0,
@@ -78,6 +78,10 @@ export const ImageEditor: React.FC<Props> = ({
       contrast: 0,
     });
   };
+
+  useEffect(() => {
+    console.log("isFilterActive", isFilterActive, "mode", mode);
+  }, [isFilterActive, mode]);
 
   /*     const onUpload = (blob: string) => {
       onReset();
@@ -140,7 +144,7 @@ export const ImageEditor: React.FC<Props> = ({
     <div className={"image-editor"}>
       <div className="image-editor__cropper">
         <Cropper
-          src={src}
+          src={image}
           defaultSize={defaultSize}
           ref={cropperRef}
           stencilProps={{

@@ -5,10 +5,11 @@ import { DownloadIcon } from "@/assets/icons/DownloadIcon";
 import { HueIcon } from "@/assets/icons/HueIcon";
 import { SaturationIcon } from "@/assets/icons/SaturationIcon";
 //import { UploadIcon } from "@/assets/icons/UploadIcon";
-import { origine } from "@/store/store";
+import { CheckIcon } from "@/assets/icons/CheckIcon";
+import { asFilterActive, origine } from "@/store/store";
 import cn from "classnames";
-import { useAtomValue } from "jotai";
-import { FC } from "react";
+import { useAtom, useAtomValue } from "jotai";
+import { FC, useEffect } from "react";
 import { Button } from "../button/Button";
 import "./Navigation.css";
 
@@ -26,11 +27,18 @@ export const Navigation: FC<Props> = ({
   mode,
 }) => {
   const originePage = useAtomValue(origine);
+  const [isFilterActive, setIsFilterActive] = useAtom(asFilterActive);
   const setMode = (mode: string) => () => {
     onChange?.(mode);
   };
 
-  console.log(onDownload);
+  useEffect(() => {
+    return () => {
+      setIsFilterActive(false);
+    };
+  }, []);
+
+  //console.log(onDownload);
 
   /* const inputRef = useRef<HTMLInputElement>(null);
 
@@ -51,7 +59,7 @@ export const Navigation: FC<Props> = ({
     // Clear the event target value to give the possibility to upload the same image:
     event.target.value = "";
   }; */
-
+  console.log("filter", isFilterActive);
   return (
     <div className={cn("image-editor-navigation", className)}>
       {/* <Button
@@ -72,11 +80,12 @@ export const Navigation: FC<Props> = ({
         {originePage === "cropper" ? (
           <Button
             className={"image-editor-navigation__button"}
+            active={mode === "crop"}
             onClick={() => onDownload()}
           >
             <DownloadIcon />
           </Button>
-        ) : (
+        ) : !isFilterActive ? (
           <Button
             className={"image-editor-navigation__button"}
             active={mode === "crop"}
@@ -86,9 +95,19 @@ export const Navigation: FC<Props> = ({
           >
             <CropIcon />
           </Button>
+        ) : (
+          <Button
+            className={"image-editor-navigation__button"}
+            active={mode === "crop"}
+            onClick={() => {
+              setMode("crop"), onDownload();
+            }}
+          >
+            <CheckIcon />
+          </Button>
         )}
 
-        {originePage == "filter" && (
+        {isFilterActive ? (
           <>
             <Button
               className={"image-editor-navigation__button"}
@@ -119,7 +138,7 @@ export const Navigation: FC<Props> = ({
               <HueIcon />
             </Button>
           </>
-        )}
+        ) : null}
       </div>
     </div>
   );

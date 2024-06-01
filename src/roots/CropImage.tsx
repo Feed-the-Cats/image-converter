@@ -17,7 +17,7 @@ const CropImage: FC = (): React.JSX.Element => {
   return (
     <>
       <ImageUri isActive="cropper" />
-      {sourceImage && <CropperView />}
+      {sourceImage && <CropperView asFilter={false} />}
     </>
   );
 };

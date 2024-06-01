@@ -4,8 +4,14 @@ import { useClearImage } from "@/lib/hooks/useClearImage";
 import toastConfig from "@/lib/toastonfig";
 
 import { cn } from "@/lib/utils";
-import { imagePreview, imageSource, imageType, origine } from "@/store/store";
-import { useAtomValue, useSetAtom } from "jotai";
+import {
+  asFilterActive,
+  imagePreview,
+  imageSource,
+  imageType,
+  origine,
+} from "@/store/store";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { FC, JSX, useRef, useState } from "react";
 import {
   Coordinates,
@@ -18,10 +24,15 @@ import { toast } from "react-toastify";
 import { ImageEditor } from "../customCropper/imageEditor/ImageEditor";
 //import "react-advanced-cropper/dist/themes/compact.css";
 
-const CropperView: FC = (): JSX.Element => {
+type CropperViewProps = {
+  asFilter?: boolean;
+};
+
+const CropperView: FC<CropperViewProps> = ({ asFilter }): JSX.Element => {
   const img = useAtomValue(imageSource);
   const originePage = useAtomValue(origine);
   const type = useAtomValue(imageType);
+  const [isFilterActive, setIsFilterActive] = useAtom(asFilterActive);
   const setPreview = useSetAtom(imagePreview);
   const previewRef = useRef<CropperPreviewRef>(null);
   const cropperRef = useRef<CropperRef>(null);
@@ -29,6 +40,17 @@ const CropperView: FC = (): JSX.Element => {
   const [, setCropperImage] = useState<string | undefined>("");
   const [tencil, setTencil] = useState<"avatar" | "rectangle">("rectangle");
   const setClearImage = useClearImage();
+
+  asFilter ? setIsFilterActive(true) : setIsFilterActive(false);
+
+  /*   useEffect(() => {
+    asFilter ? setIsFilterActive(true) : setIsFilterActive(false);
+
+    console.log("isFilterActive from cropperView", isFilterActive);
+    return () => {
+      setIsFilterActive(false);
+    };
+  }, [isFilterActive]); */
 
   const allRefs = {
     cropperRef: cropperRef,
@@ -99,30 +121,41 @@ const CropperView: FC = (): JSX.Element => {
     <Card className="w-full max-w-4xl">
       <CardHeader>
         <CardTitle className="text-2xl">Crop image</CardTitle>
-        <div className={cn("flex gap-2")}>
-          <Button
-            className={cn("w-full")}
-            onClick={() => setTencil("rectangle")}
-          >
-            rectangle
-          </Button>
-          <Button className={cn("w-full")} onClick={() => setTencil("avatar")}>
-            avatar
-          </Button>
+        {!isFilterActive ? (
+          <div className={cn("flex gap-2")}>
+            <Button
+              className={cn("w-full")}
+              onClick={() => setTencil("rectangle")}
+            >
+              rectangle
+            </Button>
+            <Button
+              className={cn("w-full")}
+              onClick={() => setTencil("avatar")}
+            >
+              avatar
+            </Button>
 
-          {originePage === "cropper" ? (
-            <Button className={cn(actionButtonsClass)} onClick={downloadImage}>
-              download
+            {originePage === "cropper" ? (
+              <Button
+                className={cn(actionButtonsClass)}
+                onClick={downloadImage}
+              >
+                download
+              </Button>
+            ) : (
+              <Button
+                className={cn(actionButtonsClass)}
+                onClick={downloadImage}
+              >
+                crop
+              </Button>
+            )}
+            <Button className={cn(actionButtonsClass)} onClick={setClearImage}>
+              Clear
             </Button>
-          ) : (
-            <Button className={cn(actionButtonsClass)} onClick={downloadImage}>
-              crop
-            </Button>
-          )}
-          <Button className={cn(actionButtonsClass)} onClick={setClearImage}>
-            Clear
-          </Button>
-        </div>
+          </div>
+        ) : null}
       </CardHeader>
       {/* "grid gap-4 justify-items-center" */}
       <CardContent className="flex flex-col gap-4 justify-items-center">
@@ -142,7 +175,7 @@ const CropperView: FC = (): JSX.Element => {
             }
           /> */}
           <ImageEditor
-            img={img}
+            /*   img={img} */
             allRefs={allRefs}
             downloadImage={downloadImage}
           />
@@ -155,13 +188,15 @@ const CropperView: FC = (): JSX.Element => {
                 : "w-full h-full"
             )}
           >
-            <CropperPreview
-              className={cn(
-                tencil === "avatar" ? "preview" : "preview w-full h-full"
-              )}
-              ref={previewRef}
-              cropper={cropperRef}
-            />
+            {!isFilterActive ? (
+              <CropperPreview
+                className={cn(
+                  tencil === "avatar" ? "preview" : "preview w-full h-full"
+                )}
+                ref={previewRef}
+                cropper={cropperRef}
+              />
+            ) : null}
           </div>
         </div>
       </CardContent>

@@ -1,4 +1,4 @@
-import Canvas from "@/components/blocks/Canvas";
+import CropperView from "@/components/blocks/CropperView";
 import useDocumentHead from "@/lib/hooks/useDocumentHead";
 import { imageSource } from "@/store/store";
 import { useAtomValue } from "jotai";
@@ -13,7 +13,8 @@ const head = {
 const Filters: FC = (): React.JSX.Element => {
   useDocumentHead(head);
   const sourceImage = useAtomValue(imageSource);
-  return <>{sourceImage && <Canvas src={sourceImage} />}</>;
+  /* return <>{sourceImage && <Canvas src={sourceImage} />}</>; */
+  return <>{sourceImage && <CropperView asFilter={true} />}</>;
 };
 
 export default Filters;
