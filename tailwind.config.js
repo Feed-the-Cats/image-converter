@@ -53,9 +53,15 @@ export const theme = {
         DEFAULT: "hsl(var(--card))",
         foreground: "hsl(var(--card-foreground))",
       },
+      crop: {
+        DEFAULT: "hsl(var(--cropper))",
+      },
+      slider: {
+        DEFAULT: "hsl(var(--cropper-slider))",
+      },
     },
     backgroundImage: {
-      "drag-icon": dragIcon,
+      "drag-icon": "var(--drag-icon)",
     },
     borderRadius: {
       lg: "var(--radius)",

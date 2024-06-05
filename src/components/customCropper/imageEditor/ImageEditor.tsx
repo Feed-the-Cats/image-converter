@@ -1,14 +1,16 @@
 import cn from "classnames";
 import { RefObject, useEffect, useState } from "react";
 import {
+  CircleStencil,
   Cropper,
   CropperPreviewRef,
   CropperRef,
+  RectangleStencil,
   Size,
 } from "react-advanced-cropper";
 //import { AdjustablePreviewBackground } from '../adjustablePreviewBackground/AdjustablePreviewBackground';
 import { ResetIcon } from "@/assets/icons/ResetIcon";
-import { asFilterActive, imageSource, origine } from "@/store/store";
+import { asFilterActive, cropStencil, imageSource } from "@/store/store";
 import { useAtomValue } from "jotai";
 import "react-advanced-cropper/dist/style.css";
 import { AdjustableCropperBackground } from "../adjustableCropperBackground/AdjustableCropperBackground";
@@ -29,6 +31,8 @@ type adjusmentType = {
   hue: number;
   saturation: number;
   contrast: number;
+  sepia: number;
+  invert: number;
 };
 
 export type allRefsType = {
@@ -36,26 +40,23 @@ export type allRefsType = {
   previewRef: RefObject<CropperPreviewRef>;
 };
 type Props = {
-  img?: string;
   downloadImage: () => void;
   allRefs: allRefsType;
 };
 
-export const ImageEditor: React.FC<Props> = ({
-  img,
-  downloadImage,
-  allRefs,
-}) => {
-  /* const [src] = useState(img); */
-  const originePage = useAtomValue(origine);
+export const ImageEditor: React.FC<Props> = ({ downloadImage, allRefs }) => {
+  // const originePage = useAtomValue(origine);
   const isFilterActive = useAtomValue(asFilterActive);
-  const [mode, setMode] = useState(isFilterActive ? "saturation" : "crop");
+  const [mode, setMode] = useState(isFilterActive ? "saturation" : "square");
   const image = useAtomValue(imageSource);
+  const stencil = useAtomValue(cropStencil);
   const [adjustments, setAdjustments] = useState<adjusmentType>({
     brightness: 0,
     hue: 0,
     saturation: 0,
     contrast: 0,
+    sepia: 0,
+    invert: 0,
   });
 
   const { cropperRef, previewRef } = allRefs;
@@ -70,18 +71,29 @@ export const ImageEditor: React.FC<Props> = ({
   };
 
   const onReset = () => {
-    setMode(isFilterActive ? "saturation" : "crop");
+    setMode(isFilterActive ? "saturation" : "square");
     setAdjustments({
       brightness: 0,
       hue: 0,
       saturation: 0,
       contrast: 0,
+      sepia: 0,
+      invert: 0,
     });
   };
 
   useEffect(() => {
     console.log("isFilterActive", isFilterActive, "mode", mode);
   }, [isFilterActive, mode]);
+
+  const onUpdate = () => {
+    previewRef.current?.refresh();
+  };
+
+  const changed = Object.values(adjustments).some((el) => Math.floor(el * 100));
+
+  //const cropperEnabled = mode === "crop";
+  const cropperEnabled = !isFilterActive;
 
   /*     const onUpload = (blob: string) => {
       onReset();
@@ -100,17 +112,9 @@ export const ImageEditor: React.FC<Props> = ({
       }
     }; */
 
-  const onUpdate = () => {
-    previewRef.current?.refresh();
-  };
-
-  const changed = Object.values(adjustments).some((el) => Math.floor(el * 100));
-
-  const cropperEnabled = mode === "crop";
-
   /* const defaultVisibleArea = {
     width: cropperRef?.current
-      ? (cropperRef?.current.getCanvas()?.width as number)
+    ? (cropperRef?.current.getCanvas()?.width as number)
       : 100,
     height: cropperRef?.current
       ? (cropperRef?.current.getCanvas()?.height as number)
@@ -140,9 +144,14 @@ export const ImageEditor: React.FC<Props> = ({
     };
   };
 
+  /*   const onChange = (cropper: CropperRef) => {
+    cropper.getCoordinates();
+    cropper.getCanvas()?.toDataURL();
+  }; */
+
   return (
-    <div className={"image-editor"}>
-      <div className="image-editor__cropper">
+    <div className={cn("border text-teal-400")}>
+      <div className={cn("relative h-[500px] max-h-screen bg-card")}>
         <Cropper
           src={image}
           defaultSize={defaultSize}
@@ -153,8 +162,8 @@ export const ImageEditor: React.FC<Props> = ({
             lines: cropperEnabled,
             handlers: cropperEnabled,
             overlayClassName: cn(
-              "image-editor__cropper-overlay",
-              !cropperEnabled && "image-editor__cropper-overlay--faded"
+              "transition-colors duration-75",
+              !cropperEnabled ? "text-black/90" : "",
             ),
           }}
           backgroundWrapperProps={{
@@ -164,25 +173,21 @@ export const ImageEditor: React.FC<Props> = ({
           backgroundComponent={AdjustableCropperBackground}
           backgroundProps={adjustments}
           onUpdate={onUpdate}
+          stencilComponent={
+            stencil === "circle" ? CircleStencil : RectangleStencil
+          }
         />
-        {mode !== "crop" && (
+        {mode !== "crop" && mode !== "square" && mode !== "circle" ? (
           <Slider
-            className="image-editor__slider"
+            className={cn("absolute bottom-5 left-1/2 w-full -translate-x-1/2")}
             value={adjustments[mode]}
             onChange={onChangeValue}
           />
-        )}
-        {/*         <CropperPreview
-          className={'image-editor__preview'}
-          cropperRef={previewRef}
-          cropper={cropperRef}
-          backgroundComponent={AdjustablePreviewBackground}
-          backgroundProps={adjustments}
-        /> */}
+        ) : null}
         <Button
           className={cn(
-            "image-editor__reset-button",
-            !changed && "image-editor__reset-button--hidden"
+            "absolute right-5 top-5 bg-white/10 hover:bg-white/20 hover:fill-teal-400",
+            !changed ? "invisible opacity-0" : "",
           )}
           onClick={onReset}
         >
@@ -195,6 +200,13 @@ export const ImageEditor: React.FC<Props> = ({
         // onUpload={onUpload}
         onDownload={downloadImage}
       />
+      {/* <CropperPreview
+        className={cn("h-11 w-11 bg-black border absolute left-5 top-5 rounded-full")}
+        cropperRef={previewRef}
+        cropper={cropperRef}
+        backgroundComponent={AdjustablePreviewBackground}
+        backgroundProps={adjustments}
+      /> */}
     </div>
   );
 };

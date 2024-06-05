@@ -6,15 +6,14 @@ import toastConfig from "@/lib/toastonfig";
 import { cn } from "@/lib/utils";
 import {
   asFilterActive,
+  cropStencil,
   imagePreview,
-  imageSource,
   imageType,
   origine,
 } from "@/store/store";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
-import { FC, JSX, useRef, useState } from "react";
+import { FC, JSX, useRef } from "react";
 import {
-  Coordinates,
   CropperPreview,
   CropperPreviewRef,
   CropperRef,
@@ -29,46 +28,26 @@ type CropperViewProps = {
 };
 
 const CropperView: FC<CropperViewProps> = ({ asFilter }): JSX.Element => {
-  const img = useAtomValue(imageSource);
   const originePage = useAtomValue(origine);
   const type = useAtomValue(imageType);
   const [isFilterActive, setIsFilterActive] = useAtom(asFilterActive);
   const setPreview = useSetAtom(imagePreview);
   const previewRef = useRef<CropperPreviewRef>(null);
   const cropperRef = useRef<CropperRef>(null);
-  const [, setCoordinate] = useState<Coordinates | null>(null);
-  const [, setCropperImage] = useState<string | undefined>("");
-  const [tencil, setTencil] = useState<"avatar" | "rectangle">("rectangle");
+  // const [, setCoordinate] = useState<Coordinates | null>(null);
+  // const [, setCropperImage] = useState<string | undefined>("");
+  // const [tencil, setTencil] = useState<"circle" | "square">("square");
+  const stencil = useAtomValue(cropStencil);
+
   const setClearImage = useClearImage();
 
   asFilter ? setIsFilterActive(true) : setIsFilterActive(false);
-
-  /*   useEffect(() => {
-    asFilter ? setIsFilterActive(true) : setIsFilterActive(false);
-
-    console.log("isFilterActive from cropperView", isFilterActive);
-    return () => {
-      setIsFilterActive(false);
-    };
-  }, [isFilterActive]); */
 
   const allRefs = {
     cropperRef: cropperRef,
     previewRef: previewRef,
   };
 
-  const actionButtonsClass =
-    "w-full bg-[var(--background-action-button)] text-background-invert hover:text-background hover:bg-orange-800 dark:bg-orange-800/30 dark:hover:bg-orange-800 dark:hover:text-white";
-
-  const onChange = (cropper: CropperRef) => {
-    setCoordinate(cropper.getCoordinates());
-    setCropperImage(cropper.getCanvas()?.toDataURL());
-  };
-
-  /*   const onUpdate = () => {
-    previewRef.current?.refresh();
-  };
- */
   const downloadBlobCallback = (blob: Blob | null) => {
     if (blob) {
       const blobUrl = URL.createObjectURL(blob);
@@ -78,6 +57,7 @@ const CropperView: FC<CropperViewProps> = ({ asFilter }): JSX.Element => {
       a.click();
       a.remove();
       URL.revokeObjectURL(blobUrl);
+
       setClearImage();
       toast.success("Start image download", toastConfig);
     }
@@ -93,7 +73,7 @@ const CropperView: FC<CropperViewProps> = ({ asFilter }): JSX.Element => {
 
   const cropImage = () => {
     setPreview(
-      cropperRef.current?.getCanvas()?.toDataURL(`image/${type}`, 1) as string
+      cropperRef.current?.getCanvas()?.toDataURL(`image/${type}`, 1) as string,
     );
     toast.success("Back to image to b64 for download", toastConfig);
   };
@@ -103,13 +83,33 @@ const CropperView: FC<CropperViewProps> = ({ asFilter }): JSX.Element => {
     cropperRef.current && originePage === "imageUri"
       ? cropImage()
       : cropperRef.current && originePage === "cropper"
-      ? cropperRef.current
-          ?.getCanvas()
-          ?.toBlob(downloadBlobCallback, `image/${type}`, 1)
-      : cropperRef.current
-          ?.getCanvas()
-          ?.toBlob(setObjectBlobCallback, `image/${type}`, 1);
+        ? cropperRef.current
+            ?.getCanvas()
+            ?.toBlob(downloadBlobCallback, `image/${type}`, 1)
+        : cropperRef.current
+            ?.getCanvas()
+            ?.toBlob(setObjectBlobCallback, `image/${type}`, 1);
   };
+
+  /*   useEffect(() => {
+    asFilter ? setIsFilterActive(true) : setIsFilterActive(false);
+
+    console.log("isFilterActive from cropperView", isFilterActive);
+    return () => {
+      setIsFilterActive(false);
+    };
+  }, [isFilterActive]); */
+
+  /* 
+  const onChange = (cropper: CropperRef) => {
+    setCoordinate(cropper.getCoordinates());
+    setCropperImage(cropper.getCanvas()?.toDataURL());
+    }; */
+
+  /*   const onUpdate = () => {
+      previewRef.current?.refresh();
+    };
+   */
 
   /*   useEffect(() => {
     console.log("from effect preview", preview);
@@ -123,20 +123,20 @@ const CropperView: FC<CropperViewProps> = ({ asFilter }): JSX.Element => {
         <CardTitle className="text-2xl">Crop image</CardTitle>
         {!isFilterActive ? (
           <div className={cn("flex gap-2")}>
-            <Button
+            {/*             <Button
               className={cn("w-full")}
-              onClick={() => setTencil("rectangle")}
+              onClick={() => setTencil("square")}
             >
-              rectangle
+              square
             </Button>
             <Button
               className={cn("w-full")}
-              onClick={() => setTencil("avatar")}
+              onClick={() => setTencil("circle")}
             >
-              avatar
-            </Button>
+              circle
+            </Button> */}
 
-            {originePage === "cropper" ? (
+            {/* {originePage === "cropper" ? (
               <Button
                 className={cn(actionButtonsClass)}
                 onClick={downloadImage}
@@ -150,16 +150,21 @@ const CropperView: FC<CropperViewProps> = ({ asFilter }): JSX.Element => {
               >
                 crop
               </Button>
-            )}
-            <Button className={cn(actionButtonsClass)} onClick={setClearImage}>
+            )} */}
+            <Button
+              className={cn(
+                "text-background-invert w-full bg-[var(--background-action-button)] hover:bg-orange-800 hover:text-background dark:bg-orange-800/30 dark:hover:bg-orange-800 dark:hover:text-white",
+              )}
+              onClick={setClearImage}
+            >
               Clear
             </Button>
           </div>
         ) : null}
       </CardHeader>
       {/* "grid gap-4 justify-items-center" */}
-      <CardContent className="flex flex-col gap-4 justify-items-center">
-        <div className={cn("w-full h-[600px] relative")}>
+      <CardContent className="flex flex-col justify-items-center gap-4">
+        <div className={cn("relative h-[600px] w-full")}>
           {/*           <Cropper
             ref={cropperRef}
             src={img}
@@ -171,7 +176,7 @@ const CropperView: FC<CropperViewProps> = ({ asFilter }): JSX.Element => {
               grid: true,
             }}
             stencilComponent={
-              tencil === "avatar" ? CircleStencil : RectangleStencil
+              tencil === "circle" ? CircleStencil : RectangleStencil
             }
           /> */}
           <ImageEditor
@@ -180,19 +185,17 @@ const CropperView: FC<CropperViewProps> = ({ asFilter }): JSX.Element => {
             downloadImage={downloadImage}
           />
         </div>
-        <div className={cn("w-full h-80 p-5 flex justify-center items-center")}>
+        <div className={cn("flex h-80 w-full items-center justify-center p-5")}>
           <div
             className={cn(
-              tencil === "avatar"
-                ? "w-72 h-72 rounded-full overflow-hidden"
-                : "w-full h-full"
+              stencil === "circle"
+                ? "h-72 w-72 overflow-hidden rounded-full"
+                : "h-full w-full",
             )}
           >
             {!isFilterActive ? (
               <CropperPreview
-                className={cn(
-                  tencil === "avatar" ? "preview" : "preview w-full h-full"
-                )}
+                className={cn("preview h-full w-full")}
                 ref={previewRef}
                 cropper={cropperRef}
               />

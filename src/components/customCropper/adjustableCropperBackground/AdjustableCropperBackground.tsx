@@ -1,11 +1,11 @@
-import { forwardRef } from 'react';
+import { getBackgroundStyle } from "advanced-cropper";
+import { forwardRef } from "react";
 import {
-  CropperTransitions,
   CropperImage,
   CropperState,
-} from 'react-advanced-cropper';
-import { getBackgroundStyle } from 'advanced-cropper';
-import { AdjustableImage } from '../adjustableImage/AdjustableImage';
+  CropperTransitions,
+} from "react-advanced-cropper";
+import { AdjustableImage } from "../adjustableImage/AdjustableImage";
 
 interface DesiredCropperRef {
   getState: () => CropperState;
@@ -16,11 +16,13 @@ interface DesiredCropperRef {
 interface Props {
   className?: string;
   cropper: DesiredCropperRef;
-  crossOrigin?: 'anonymous' | 'use-credentials' | boolean;
+  crossOrigin?: "anonymous" | "use-credentials" | boolean;
   brightness?: number;
   saturation?: number;
   hue?: number;
   contrast?: number;
+  sepia?: number;
+  invert?: number;
 }
 
 export const AdjustableCropperBackground = forwardRef<HTMLCanvasElement, Props>(
@@ -33,8 +35,10 @@ export const AdjustableCropperBackground = forwardRef<HTMLCanvasElement, Props>(
       saturation = 0,
       hue = 0,
       contrast = 0,
+      sepia = 0,
+      invert = 0,
     }: Props,
-    ref
+    ref,
   ) => {
     const state = cropper.getState();
     const transitions = cropper.getTransitions();
@@ -51,10 +55,12 @@ export const AdjustableCropperBackground = forwardRef<HTMLCanvasElement, Props>(
         saturation={saturation}
         hue={hue}
         contrast={contrast}
+        sepia={sepia}
+        invert={invert}
         ref={ref}
         className={className}
         style={style}
       />
     );
-  }
+  },
 );

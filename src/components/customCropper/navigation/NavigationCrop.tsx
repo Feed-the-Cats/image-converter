@@ -6,9 +6,13 @@ import { HueIcon } from "@/assets/icons/HueIcon";
 import { SaturationIcon } from "@/assets/icons/SaturationIcon";
 //import { UploadIcon } from "@/assets/icons/UploadIcon";
 import { CheckIcon } from "@/assets/icons/CheckIcon";
-import { asFilterActive, origine } from "@/store/store";
+import { CircleIcon } from "@/assets/icons/CircleIcon";
+import { InvertIcon } from "@/assets/icons/InvertIcon";
+import { SepiaIcon } from "@/assets/icons/SepiaIcon";
+import { SquareIcon } from "@/assets/icons/SquareIcon";
+import { asFilterActive, cropStencil, origine } from "@/store/store";
 import cn from "classnames";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { FC, useEffect } from "react";
 import { Button } from "../button/Button";
 import "./Navigation.css";
@@ -28,13 +32,16 @@ export const Navigation: FC<Props> = ({
 }) => {
   const originePage = useAtomValue(origine);
   const [isFilterActive, setIsFilterActive] = useAtom(asFilterActive);
-  const setMode = (mode: string) => () => {
+  const setStencil = useSetAtom(cropStencil);
+  /*   const setMode = (mode: string) => () => {
     onChange?.(mode);
-  };
+  }; */
 
   useEffect(() => {
     return () => {
       setIsFilterActive(false);
+      //onChange?.("square");
+      setStencil("square");
     };
   }, []);
 
@@ -61,22 +68,28 @@ export const Navigation: FC<Props> = ({
   }; */
   console.log("filter", isFilterActive);
   return (
-    <div className={cn("image-editor-navigation", className)}>
+    /* en cours */
+    <div
+      className={cn(
+        "flex h-20 items-center justify-center border-t border-border bg-crop px-4 sm:px-2",
+        className,
+      )}
+    >
       {/* <Button
-          className={"image-editor-navigation__button"}
-          onClick={onUploadButtonClick}
-        >
-          <UploadIcon />
-          <input
-            ref={inputRef}
-            type="file"
-            accept="image/*"
-            onChange={onLoadImage}
-            className="image-editor-navigation__upload-input"
-          />
-        </Button> */}
+        className={"image-editor-navigation__button"}
+        onClick={onUploadButtonClick}
+      >
+        <UploadIcon /> 
+        <input
+          ref={inputRef} 
+          type="file"
+          accept="image/*"
+          onChange={onLoadImage} 
+          className={cn("hidden")}
+        />
+      </Button> */}
 
-      <div className="image-editor-navigation__buttons">
+      <div className={cn("flex items-center justify-center")}>
         {originePage === "cropper" ? (
           <Button
             className={"image-editor-navigation__button"}
@@ -90,7 +103,7 @@ export const Navigation: FC<Props> = ({
             className={"image-editor-navigation__button"}
             active={mode === "crop"}
             onClick={() => {
-              setMode("crop"), onDownload();
+              onChange?.("crop"), onDownload();
             }}
           >
             <CropIcon />
@@ -100,7 +113,7 @@ export const Navigation: FC<Props> = ({
             className={"image-editor-navigation__button"}
             active={mode === "crop"}
             onClick={() => {
-              setMode("crop"), onDownload();
+              onChange?.("crop"), onDownload();
             }}
           >
             <CheckIcon />
@@ -112,33 +125,68 @@ export const Navigation: FC<Props> = ({
             <Button
               className={"image-editor-navigation__button"}
               active={mode === "saturation"}
-              onClick={setMode("saturation")}
+              onClick={() => onChange?.("saturation")}
             >
               <SaturationIcon />
             </Button>
             <Button
               className={"image-editor-navigation__button"}
               active={mode === "brightness"}
-              onClick={setMode("brightness")}
+              onClick={() => onChange?.("brightness")}
             >
               <BrightnessIcon />
             </Button>
             <Button
               className={"image-editor-navigation__button"}
               active={mode === "contrast"}
-              onClick={setMode("contrast")}
+              onClick={() => onChange?.("contrast")}
             >
               <ContrastIcon />
             </Button>
             <Button
-              className={"image-editor-navigation__button"}
+              className={cn("mx-2 sm:mx-1")}
               active={mode === "hue"}
-              onClick={setMode("hue")}
+              onClick={() => onChange?.("hue")}
             >
               <HueIcon />
             </Button>
+            <Button
+              className={cn("mx-2 sm:mx-1")}
+              active={mode === "sepia"}
+              onClick={() => onChange?.("sepia")}
+            >
+              <SepiaIcon />
+            </Button>
+            <Button
+              className={cn("mx-2 sm:mx-1")}
+              active={mode === "invert"}
+              onClick={() => onChange?.("invert")}
+            >
+              <InvertIcon />
+            </Button>
           </>
-        ) : null}
+        ) : (
+          <>
+            <Button
+              className={cn("mx-2 sm:mx-1")}
+              active={mode === "square"}
+              onClick={() => {
+                onChange?.("square"), setStencil("square");
+              }}
+            >
+              <SquareIcon />
+            </Button>
+            <Button
+              className={cn("mx-2 sm:mx-1")}
+              active={mode === "circle"}
+              onClick={() => {
+                onChange?.("circle"), setStencil("circle");
+              }}
+            >
+              <CircleIcon />
+            </Button>
+          </>
+        )}
       </div>
     </div>
   );

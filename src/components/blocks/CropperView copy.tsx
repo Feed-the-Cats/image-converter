@@ -68,7 +68,7 @@ const CropperView: FC = (): React.JSX.Element => {
 
   const cropImage = () => {
     setPreview(
-      cropperRef.current?.getCanvas()?.toDataURL(`image/${type}`, 1) as string
+      cropperRef.current?.getCanvas()?.toDataURL(`image/${type}`, 1) as string,
     );
     toast.success("Back to image to b64 for download", toastConfig);
   };
@@ -77,12 +77,12 @@ const CropperView: FC = (): React.JSX.Element => {
     cropperRef.current && originePage === "imageUri"
       ? cropImage()
       : cropperRef.current && originePage === "cropper"
-      ? cropperRef.current
-          ?.getCanvas()
-          ?.toBlob(downloadBlobCallback, `image/${type}`, 1)
-      : cropperRef.current
-          ?.getCanvas()
-          ?.toBlob(setObjectBlobCallback, `image/${type}`, 1);
+        ? cropperRef.current
+            ?.getCanvas()
+            ?.toBlob(downloadBlobCallback, `image/${type}`, 1)
+        : cropperRef.current
+            ?.getCanvas()
+            ?.toBlob(setObjectBlobCallback, `image/${type}`, 1);
   };
 
   /*   useEffect(() => {
@@ -121,12 +121,12 @@ const CropperView: FC = (): React.JSX.Element => {
         </div>
       </CardHeader>
       // "grid gap-4 justify-items-center"
-      <CardContent className="flex flex-col gap-4 justify-items-center">
-        <div className={cn("w-full h-[600px] relative")}>
+      <CardContent className="flex flex-col justify-items-center gap-4">
+        <div className={cn("relative h-[600px] w-full")}>
           <Cropper
             ref={cropperRef}
             src={img}
-            className={cn("cropper", "w-full h-[600px]")}
+            className={cn("cropper", "h-[600px] w-full")}
             onChange={onChange}
             onUpdate={onUpdate}
             crossOrigin="anonymous"
@@ -138,17 +138,17 @@ const CropperView: FC = (): React.JSX.Element => {
             }
           />
         </div>
-        <div className={cn("w-full h-80 p-5 flex justify-center items-center")}>
+        <div className={cn("flex h-80 w-full items-center justify-center p-5")}>
           <div
             className={cn(
               tencil === "avatar"
-                ? "w-72 h-72 rounded-full overflow-hidden"
-                : "w-full h-full"
+                ? "h-72 w-72 overflow-hidden rounded-full"
+                : "h-full w-full",
             )}
           >
             <CropperPreview
               className={cn(
-                tencil === "avatar" ? "preview" : "preview w-full h-full"
+                tencil === "avatar" ? "preview" : "preview h-full w-full",
               )}
               ref={previewRef}
               cropper={cropperRef}

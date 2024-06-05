@@ -61,7 +61,7 @@ export const Canvas = ({
 
   const cropImage = () => {
     setPreview(
-      cropperRef.current?.getCanvas()?.toDataURL(`image/${type}`, 1) as string
+      cropperRef.current?.getCanvas()?.toDataURL(`image/${type}`, 1) as string,
     );
     toast.success("Back to image to b64 for download", toastConfig);
   };
@@ -71,12 +71,12 @@ export const Canvas = ({
     cropperRef.current && originePage === "imageUri"
       ? cropImage()
       : cropperRef.current && originePage === "cropper"
-      ? cropperRef.current
-          ?.getCanvas()
-          ?.toBlob(downloadBlobCallback, `image/${type}`, 1)
-      : cropperRef.current
-          ?.getCanvas()
-          ?.toBlob(setObjectBlobCallback, `image/${type}`, 1);
+        ? cropperRef.current
+            ?.getCanvas()
+            ?.toBlob(downloadBlobCallback, `image/${type}`, 1)
+        : cropperRef.current
+            ?.getCanvas()
+            ?.toBlob(setObjectBlobCallback, `image/${type}`, 1);
   };
 
   useEffect(() => {
@@ -99,7 +99,7 @@ export const Canvas = ({
       <CardHeader>
         <CardTitle className="text-2xl">Filters</CardTitle>
       </CardHeader>
-      <CardContent className="grid gap-4 justify-items-center">
+      <CardContent className="grid justify-items-center gap-4">
         {/*         <div className={cn("min-w-28 max-w-4xl")}>
           <canvas {...props} className={cn("w-full h-auto")} ref={ref}></canvas>
         </div>
@@ -120,11 +120,7 @@ export const Canvas = ({
             <span>{value}</span>
           </div>
         </div> */}
-        <ImageEditor
-          img={img}
-          allRefs={allRefs}
-          downloadImage={downloadImage}
-        />
+        <ImageEditor allRefs={allRefs} downloadImage={downloadImage} />
       </CardContent>
     </Card>
   );

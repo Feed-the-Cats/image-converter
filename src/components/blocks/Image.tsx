@@ -12,7 +12,7 @@ const Image: FC = (): React.JSX.Element => {
       <CardHeader>
         <CardTitle className="text-2xl">Image source</CardTitle>
       </CardHeader>
-      <CardContent className="grid gap-4 justify-items-center">
+      <CardContent className="grid justify-items-center gap-4">
         <div>
           <img src={img} alt="image source" />
         </div>

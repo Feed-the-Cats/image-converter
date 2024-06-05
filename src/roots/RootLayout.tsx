@@ -25,11 +25,11 @@ const RootLayout: FC = (): React.JSX.Element => {
   return (
     <>
       <TooltipProvider>
-        <div className={cn("flex w-full min-h-screen flex-col bg-muted/40")}>
+        <div className={cn("flex min-h-screen w-full flex-col bg-muted/40")}>
           {/* <div className={cn("w-[200px] h-screen bg-slate-600")}></div> */}
           <div
             className={cn(
-              "fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex"
+              "fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex",
             )}
           >
             <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
@@ -38,7 +38,7 @@ const RootLayout: FC = (): React.JSX.Element => {
                   <NavLink
                     to={"/"}
                     className={cn(
-                      "flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                      "flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8",
                     )}
                   >
                     <Home className="h-5 w-5" />
@@ -52,7 +52,7 @@ const RootLayout: FC = (): React.JSX.Element => {
                   <NavLink
                     to={"image2b64"}
                     className={cn(
-                      "flex h-9 w-9 items-center justify-center rounded-lg  text-muted-foreground  transition-colors hover:text-foreground md:h-8 md:w-8"
+                      "flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8",
                     )}
                   >
                     <FileOutput className="h-5 w-5" />
@@ -66,7 +66,7 @@ const RootLayout: FC = (): React.JSX.Element => {
                   <NavLink
                     to={"b64toimage"}
                     className={cn(
-                      "flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                      "flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8",
                     )}
                   >
                     <FileInput className="h-5 w-5" />
@@ -80,7 +80,7 @@ const RootLayout: FC = (): React.JSX.Element => {
                   <NavLink
                     to="cropper"
                     className={cn(
-                      "flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                      "flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8",
                     )}
                   >
                     <Crop className="h-5 w-5" />
@@ -118,8 +118,8 @@ const RootLayout: FC = (): React.JSX.Element => {
             </nav>
           </div>
 
-          <div className="flex flex-col gap-10  sm:pl-14">
-            <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b px-4 sm:h-auto sm:border-0  sm:px-6  bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+          <div className="flex flex-col gap-10 sm:pl-14">
+            <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/60 sm:h-auto sm:border-0 sm:px-6">
               <Sheet>
                 <SheetTrigger asChild>
                   <Button size="icon" variant="outline" className="sm:hidden">
@@ -168,7 +168,7 @@ const RootLayout: FC = (): React.JSX.Element => {
                   </nav>
                 </SheetContent>
               </Sheet>
-              <div className="w-full h-14 mx-auto flex justify-center items-center text-4xl">
+              <div className="mx-auto flex h-14 w-full items-center justify-center text-4xl">
                 Image Converter
               </div>
             </header>

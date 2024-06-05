@@ -1,5 +1,7 @@
+/* fait */
 .image-editor-navigation {
-  background: #1b1a21;
+  background: hsl(249, 12%, 12%);
+  background: red;
   height: 84px;
   border-top: solid 1px #2b2a30;
   display: flex;
@@ -8,6 +10,13 @@
   padding-left: 16px;
   padding-right: 16px;
 }
+@media (max-width: 540px) {
+  .image-editor-navigation {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
+/* fait */
 .image-editor-navigation__button {
   margin-left: 8px;
   margin-right: 8px;
@@ -18,17 +27,13 @@
     margin-right: 4px;
   }
 }
+/* fait */
 .image-editor-navigation__buttons {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+/* fait */
 .image-editor-navigation__upload-input {
   display: none;
-}
-@media (max-width: 540px) {
-  .image-editor-navigation {
-    padding-left: 8px;
-    padding-right: 8px;
-  }
 }

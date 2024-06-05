@@ -1,4 +1,3 @@
-import "@/App.css";
 import B64toBlob from "@/roots/B64ToBlob";
 import CropImage from "@/roots/CropImage";
 import Filters from "@/roots/Filters";

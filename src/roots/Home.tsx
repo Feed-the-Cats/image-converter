@@ -1,28 +1,24 @@
+import { H } from "@/components/customUi/H";
+import { Ul } from "@/components/customUi/Ul";
 import { cn } from "@/lib/utils";
 import React, { FC } from "react";
 
 const Home: FC = (): React.JSX.Element => {
   return (
-    <div
-      className={cn(
-        "flex flex-col h-screen w-full items-center justify-center"
-      )}
-    >
-      <header className="w-full text-white text-center py-4">
-        <h1 className="text-3xl">Welcome to Image Converter</h1>
+    <div className={cn("flex h-full w-full flex-col items-center")}>
+      <header className="w-full py-4 text-center">
+        <H h="h1" className="my-0" title="Welcome to Image Converter" />
       </header>
-      <div className="max-w-4xl  p-4">
+      <div className="max-w-4xl p-4">
         <p className="mb-4">
           Transform and enhance your images with ease using our online tool.
           Whether you need to convert images between different formats, apply
           artistic filters, or crop images for a perfect result, Image Converter
           is here for you.
         </p>
-
-        <h2 className="text-2xl text-sky-400 mb-2">Main Features:</h2>
-
-        <h3 className="text-xl text-sky-400 mt-4 mb-2">Image Conversion</h3>
-        <ul className="list-disc list-inside mb-4">
+        <H h="h2" title="Main Features :" primary />
+        <H h="h3" title="Image Conversion" primary />
+        <Ul>
           <li>
             <strong>From base64 to file</strong>: Easily convert your base64
             image strings into usable image files.
@@ -32,10 +28,9 @@ const Home: FC = (): React.JSX.Element => {
             into base64 strings for easy integration into your web projects and
             applications.
           </li>
-        </ul>
-
-        <h3 className="text-xl text-sky-400 mt-4 mb-2">Image Editing</h3>
-        <ul className="list-disc list-inside mb-4">
+        </Ul>
+        <H h="h3" title="Image Editing" primary />
+        <Ul>
           <li>
             <strong>Filter application</strong>: Add an artistic touch to your
             photos with our varied and intuitive filters.
@@ -44,10 +39,9 @@ const Home: FC = (): React.JSX.Element => {
             <strong>Crop</strong>: Adjust the framing of your images to
             highlight important details.
           </li>
-        </ul>
-
-        <h3 className="text-xl text-sky-400 mt-4 mb-2">Download and Edit</h3>
-        <ul className="list-disc list-inside mb-4">
+        </Ul>
+        <H h="h3" title="Download and Edit" primary />
+        <Ul>
           <li>
             <strong>Download an image</strong>: Import your images to edit them
             directly on our platform.
@@ -56,12 +50,9 @@ const Home: FC = (): React.JSX.Element => {
             <strong>Filters and cropping</strong>: Apply filters or crop your
             images without needing to convert them.
           </li>
-        </ul>
-
-        <h2 className="text-2xl text-sky-400 mt-4 mb-2">
-          Why Choose Image Converter?
-        </h2>
-        <ul className="list-disc list-inside mb-4">
+        </Ul>
+        <H h="h3" title="Why Choose Image Converter ?" primary />
+        <Ul>
           <li>
             <strong>Ease of use</strong>: Our user-friendly interface allows you
             to transform and enhance your images in just a few clicks.
@@ -70,9 +61,8 @@ const Home: FC = (): React.JSX.Element => {
             <strong>Flexibility</strong>: Whether you are a developer, designer,
             or photography enthusiast, our tool meets your specific needs.
           </li>
-        </ul>
-
-        <h2 className="text-2xl text-sky-400 mt-4 mb-4">Get Started Now</h2>
+        </Ul>
+        <H h="h2" className="mb-4 mt-4" title="Get Started Now" primary />
       </div>
     </div>
   );

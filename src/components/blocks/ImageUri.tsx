@@ -34,6 +34,7 @@ import { useDropzone } from "react-dropzone";
 import { toast } from "react-toastify";
 
 type isActiveType = { isActive: "imageUri" | "cropper" | "blob" };
+type imgToBlobType = (imageUrl: any, isInput?: boolean) => Promise<void>;
 
 const ImageUri: FC<isActiveType> = ({ isActive }): React.JSX.Element => {
   const setBase64Image = useSetAtom(image64);
@@ -44,51 +45,6 @@ const ImageUri: FC<isActiveType> = ({ isActive }): React.JSX.Element => {
   const [isDisabled, setIsDisabled] = useAtom(isElementsDisabled);
   const setClearImage = useClearImage();
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const handleInputChange = ({
-    target: { value },
-  }: ChangeEvent<HTMLInputElement>) => {
-    if (value.length && /data:image/.test(value)) {
-      setImageType(value.split(";")[0].split("/")[1]);
-    }
-    setImageUrl(value);
-    /* getImageType(value); */
-    setOriginePage(isActive);
-    /*  console.log("imput change", originePage); */
-    setIsDisabled(originePage !== isActive);
-  };
-
-  const inputClick = ({ currentTarget }: MouseEvent<HTMLInputElement>) => {
-    if (currentTarget.value.length) currentTarget.value = "";
-    /* setBase64Image(""); */
-    setClearImage();
-  };
-
-  const handleConvertClick = async () => {
-    if (!imageUrl) return;
-    if (/data:image/.test(imageUrl)) {
-      setBase64Image(imageUrl);
-      return;
-    }
-
-    try {
-      const response = await fetch(imageUrl);
-      const blob = await response.blob();
-      const reader = new FileReader();
-      const [, type] = blob.type.split("/");
-      setImageType(type);
-      /* console.log(type); */
-      reader.onload = () => {
-        const base64String = reader.result as string;
-        setBase64Image(base64String);
-      };
-      reader.readAsDataURL(blob);
-      toast.success("Image converted", toastConfig);
-    } catch (error) {
-      toast.error("An error has occurred :", toastConfig);
-      //console.error("An error has occurred :", error);
-    }
-  };
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
@@ -121,8 +77,62 @@ const ImageUri: FC<isActiveType> = ({ isActive }): React.JSX.Element => {
       isActive,
       setIsDisabled,
       originePage,
-    ]
+    ],
   );
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
+  const imgToBlob: imgToBlobType = async (imageUrl, isInput = false) => {
+    try {
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+      const reader = new FileReader();
+      const [, type] = blob.type.split("/");
+      setImageType(type);
+      /* console.log(type); */
+      reader.onload = () => {
+        const base64String = reader.result as string;
+        isInput ? setImageUrl(base64String) : setBase64Image(base64String);
+      };
+      reader.readAsDataURL(blob);
+      if (!isInput) toast.success("Image converted", toastConfig);
+    } catch (error) {
+      toast.error("An error has occurred :", toastConfig);
+      //console.error("An error has occurred :", error);
+    }
+  };
+
+  const handleInputChange = ({
+    target: { value },
+  }: ChangeEvent<HTMLInputElement>) => {
+    if (value.length && /data:image/.test(value)) {
+      setImageType(value.split(";")[0].split("/")[1]);
+    }
+    if (value.length && !/data:image/.test(value)) {
+      imgToBlob(value, true);
+    }
+
+    /* getImageType(value); */
+    setImageUrl(value);
+    setOriginePage(isActive);
+    /*  console.log("imput change", originePage); */
+    setIsDisabled(originePage !== isActive);
+  };
+
+  const inputClick = ({ currentTarget }: MouseEvent<HTMLInputElement>) => {
+    if (currentTarget.value.length) currentTarget.value = "";
+    /* setBase64Image(""); */
+    setClearImage();
+  };
+
+  const handleConvertClick = async () => {
+    if (!imageUrl) return;
+    if (/data:image/.test(imageUrl)) {
+      setBase64Image(imageUrl);
+      return;
+    }
+    imgToBlob(imageUrl);
+  };
 
   const downloadImage = () => {
     const a = document.createElement("a");
@@ -147,8 +157,6 @@ const ImageUri: FC<isActiveType> = ({ isActive }): React.JSX.Element => {
     preview.length ? setImageUrl(preview) : null;
   }, [preview, setImageUrl]);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-
   return (
     <>
       <Card className="w-full max-w-4xl">
@@ -158,11 +166,11 @@ const ImageUri: FC<isActiveType> = ({ isActive }): React.JSX.Element => {
               {...getRootProps()}
               id="dropzone"
               className={cn(
-                "w-[200px] h-[200px] mt-1.5 mb-8 relative text-center flex flex-col items-center justify-center gap-4 self-center overflow-hidden after:w-[200px] after:h-[200px] after:absolute after:inset-0 after:top-0 after:left-0 after:[mask:--svg-mask]",
+                "relative mb-8 mt-1.5 flex h-[200px] w-[200px] flex-col items-center justify-center gap-4 self-center overflow-hidden text-center after:absolute after:inset-0 after:left-0 after:top-0 after:h-[200px] after:w-[200px] after:[mask:--drag-icon]",
                 isDragActive
                   ? "text-foreground after:bg-foreground"
                   : "text-muted-foreground after:bg-muted-foreground",
-                isDisabled ? "cursor-not-allowed" : "cursor-pointer"
+                isDisabled ? "cursor-not-allowed" : "cursor-pointer",
               )}
             >
               <input
@@ -173,8 +181,10 @@ const ImageUri: FC<isActiveType> = ({ isActive }): React.JSX.Element => {
               />
               <Upload
                 className={cn(
-                  "w-16 h-16 ",
-                  isDragActive ? "stroke-foreground" : "stroke-muted-foreground"
+                  "h-16 w-16",
+                  isDragActive
+                    ? "stroke-foreground"
+                    : "stroke-muted-foreground",
                 )}
                 /* style={isDragActive ? { stroke: "#ffffff" } : {}} */
               />
@@ -224,7 +234,7 @@ const ImageUri: FC<isActiveType> = ({ isActive }): React.JSX.Element => {
               <Button
                 disabled={isDisabled}
                 className={cn(
-                  "w-full bg-[var(--background-action-button)] text-background-invert hover:text-background hover:bg-orange-800 dark:bg-orange-800/30 dark:hover:bg-orange-800 dark:hover:text-white"
+                  "text-background-invert w-full bg-teal-500/50 hover:bg-teal-500 hover:text-black dark:bg-teal-400/20 dark:hover:bg-teal-500 dark:hover:text-black",
                 )}
                 onClick={setClearImage}
               >
@@ -244,7 +254,7 @@ const ImageUri: FC<isActiveType> = ({ isActive }): React.JSX.Element => {
               <Button
                 disabled={isDisabled}
                 className={cn(
-                  "w-full bg-[var(--background-action-button)] text-background-invert hover:text-background hover:bg-orange-800 dark:bg-orange-800/30 dark:hover:bg-orange-800 dark:hover:text-white"
+                  "text-background-invert w-full bg-teal-500/50 hover:bg-teal-500 hover:text-black dark:bg-teal-400/20 dark:hover:bg-teal-500 dark:hover:text-black",
                 )}
                 onClick={setClearImage}
               >

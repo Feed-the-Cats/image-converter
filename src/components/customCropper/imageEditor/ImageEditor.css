@@ -1,7 +1,9 @@
+/* fait */
 .image-editor {
   color: #61dafb;
   border: solid 1px #2b2a30;
 }
+/* fait */
 .image-editor__preview {
   height: 45px;
   width: 45px;
@@ -12,12 +14,14 @@
   top: 20px;
   border-radius: 50%;
 }
+/* fait */
 .image-editor__cropper {
-  background: #0f0e13;
+  background: #0e0d12;
   height: 500px;
   max-height: 100vh;
   position: relative;
 }
+/* fait */
 .image-editor__slider {
   width: 100%;
   left: 50%;
@@ -25,27 +29,32 @@
   bottom: 20px;
   position: absolute;
 }
+/* fait */
 .image-editor__cropper-overlay {
   transition: 0.5s;
 }
+/* fait */
 .image-editor__cropper-overlay--faded {
-  color: #000000e6;
+  color: rgba(0, 0, 0, 0.902);
 }
+/* ... */
 .image-editor__service {
   pointer-events: none;
   left: -100%;
   position: absolute;
 }
+/* fait */
 .image-editor__reset-button {
   position: absolute;
   right: 20px;
   top: 20px;
-  background: #ffffff1a;
+  background: rgba(255, 255, 255, 0.102);
 }
 .image-editor__reset-button:hover {
   fill: #61dafb;
-  background: #fff3;
+  background: rgba(255, 255, 255, 0.2);
 }
+/* fait */
 .image-editor__reset-button--hidden {
   opacity: 0;
   visibility: hidden;

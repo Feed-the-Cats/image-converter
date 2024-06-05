@@ -9,3 +9,4 @@ export const asFilterActive = atom(false);
 export const origine = atom<"imageUri" | "cropper" | "blob" | "filter" | null>(
   null
 );
+export const cropStencil = atom<"circle" | "square">("square");
