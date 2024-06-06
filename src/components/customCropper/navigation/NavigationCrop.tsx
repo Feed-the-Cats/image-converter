@@ -90,7 +90,7 @@ export const Navigation: FC<Props> = ({
       </Button> */}
 
       <div className={cn("flex items-center justify-center")}>
-        {originePage === "cropper" ? (
+        {originePage === "cropper" && !isFilterActive ? (
           <Button
             className={"image-editor-navigation__button"}
             active={mode === "crop"}
@@ -98,7 +98,7 @@ export const Navigation: FC<Props> = ({
           >
             <DownloadIcon />
           </Button>
-        ) : !isFilterActive ? (
+        ) : originePage !== "cropper" && !isFilterActive ? (
           <Button
             className={"image-editor-navigation__button"}
             active={mode === "crop"}

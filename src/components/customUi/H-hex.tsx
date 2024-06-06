@@ -1,25 +1,4 @@
 import { cn } from "@/lib/utils";
-import { VariantProps, cva } from "class-variance-authority";
-
-const headingVariants = cva({
-  variants: {
-    hs: {
-      h1: "my-5 text-3xl",
-      h2: "mb-2 mt-4 text-2xl",
-      h3: "mb-2 mt-4 text-xl",
-      h4: "mb-2 mt-4 text-lg",
-      h5: "mb-2 mt-4 text-base",
-      h6: "mb-2 mt-4 text-sm",
-    },
-  },
-});
-
-export interface HeadingProps
-  extends React.HTMLAttributes<HTMLHeadingElement>,
-    VariantProps<typeof headingVariants> {
-  title: string;
-  primary: boolean;
-}
 
 type HType = {
   h: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
@@ -27,9 +6,8 @@ type HType = {
   className?: string;
   primary?: boolean;
 };
-
 export const H = ({ h, title, className = "", primary }: HType) => {
-  /*  switch (h) {
+  switch (h) {
     case "h1":
       return (
         <h1
@@ -114,17 +92,5 @@ export const H = ({ h, title, className = "", primary }: HType) => {
           {title}
         </h1>
       );
-  } */
-  const H = h;
-  return (
-    <H
-      className={cn(
-        "my-5 text-3xl",
-        primary ? "text-teal-700 dark:text-teal-400" : "",
-        className,
-      )}
-    >
-      {title}
-    </H>
-  );
+  }
 };

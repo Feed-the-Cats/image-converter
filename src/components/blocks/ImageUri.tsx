@@ -193,7 +193,7 @@ const ImageUri: FC<isActiveType> = ({ isActive }): React.JSX.Element => {
               ) : (
                 <div>
                   <p>Drop files here.</p>
-                  <p>or click to select files.</p>
+                  <p>Or click to select files.</p>
                 </div>
               )}
             </div>
@@ -233,9 +233,7 @@ const ImageUri: FC<isActiveType> = ({ isActive }): React.JSX.Element => {
               </Button>
               <Button
                 disabled={isDisabled}
-                className={cn(
-                  "text-background-invert w-full bg-teal-500/50 hover:bg-teal-500 hover:text-black dark:bg-teal-400/20 dark:hover:bg-teal-500 dark:hover:text-black",
-                )}
+                className={cn("btn-teal")}
                 onClick={setClearImage}
               >
                 Clear
@@ -253,9 +251,7 @@ const ImageUri: FC<isActiveType> = ({ isActive }): React.JSX.Element => {
               </Button>
               <Button
                 disabled={isDisabled}
-                className={cn(
-                  "text-background-invert w-full bg-teal-500/50 hover:bg-teal-500 hover:text-black dark:bg-teal-400/20 dark:hover:bg-teal-500 dark:hover:text-black",
-                )}
+                className={cn("btn-teal")}
                 onClick={setClearImage}
               >
                 Clear

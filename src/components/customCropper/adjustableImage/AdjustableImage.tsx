@@ -49,8 +49,8 @@ export const AdjustableImage = forwardRef<HTMLCanvasElement, Props>(
             `contrast(${100 + contrast * 100}%)`,
             `saturate(${100 + saturation * 100}%)`,
             `hue-rotate(${hue * 360}deg)`,
-            `sepia(${sepia * 100}%)`,
-            `invert(${invert * 100}%)`,
+            `sepia(${sepia * 100 < 0 ? 0 : sepia * 100}%)`,
+            `invert(${invert * 100 < 0 ? 0 : invert * 100}%)`,
           ].join(" ");
 
           ctx.drawImage(image, 0, 0, image.naturalWidth, image.naturalHeight);

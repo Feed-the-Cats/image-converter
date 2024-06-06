@@ -1,3 +1,4 @@
+import { H } from "@/components/customUi/H";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
@@ -7,6 +8,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
+import { origine } from "@/store/store";
+import { useAtomValue } from "jotai";
 import {
   Crop,
   FileInput,
@@ -22,6 +25,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const RootLayout: FC = (): React.JSX.Element => {
+  const originePage = useAtomValue(origine);
+  console.log("originePage", originePage);
   return (
     <>
       <TooltipProvider>
@@ -118,7 +123,12 @@ const RootLayout: FC = (): React.JSX.Element => {
             </nav>
           </div>
 
-          <div className="flex flex-col gap-10 sm:pl-14">
+          <div
+            className={cn(
+              "flex flex-col gap-10 sm:pl-14",
+              originePage === "home" ? "gap-0" : "",
+            )}
+          >
             <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/60 sm:h-auto sm:border-0 sm:px-6">
               <Sheet>
                 <SheetTrigger asChild>
@@ -168,11 +178,11 @@ const RootLayout: FC = (): React.JSX.Element => {
                   </nav>
                 </SheetContent>
               </Sheet>
-              <div className="mx-auto flex h-14 w-full items-center justify-center text-4xl">
-                Image Converter
+              <div className="mx-auto flex h-14 w-full items-center justify-center">
+                <H className={cn("text-2xl")} title={"Image Converter"} />
               </div>
             </header>
-            <main id="main" className="flex flex-col items-center gap-4">
+            <main id="main" className={cn("flex flex-col items-center gap-4")}>
               <Outlet />
             </main>
           </div>

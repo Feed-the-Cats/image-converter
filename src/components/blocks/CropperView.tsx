@@ -120,7 +120,9 @@ const CropperView: FC<CropperViewProps> = ({ asFilter }): JSX.Element => {
   return (
     <Card className="w-full max-w-4xl">
       <CardHeader>
-        <CardTitle className="text-2xl">Crop image</CardTitle>
+        <CardTitle className="text-2xl">
+          {!isFilterActive ? "Crop image" : "Image filters"}
+        </CardTitle>
         {!isFilterActive ? (
           <div className={cn("flex gap-2")}>
             {/*             <Button
@@ -151,12 +153,7 @@ const CropperView: FC<CropperViewProps> = ({ asFilter }): JSX.Element => {
                 crop
               </Button>
             )} */}
-            <Button
-              className={cn(
-                "text-background-invert w-full bg-[var(--background-action-button)] hover:bg-orange-800 hover:text-background dark:bg-orange-800/30 dark:hover:bg-orange-800 dark:hover:text-white",
-              )}
-              onClick={setClearImage}
-            >
+            <Button className={cn("btn-teal")} onClick={setClearImage}>
               Clear
             </Button>
           </div>
