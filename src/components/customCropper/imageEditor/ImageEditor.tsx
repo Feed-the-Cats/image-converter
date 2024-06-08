@@ -2,7 +2,7 @@ import { ResetIcon } from "@/assets/icons/ResetIcon";
 import { asFilterActive, cropStencil, imageSource } from "@/store/store";
 import cn from "classnames";
 import { useAtomValue } from "jotai";
-import { RefObject, useEffect, useState, FC, JSX } from "react";
+import { FC, JSX, RefObject, useState } from "react";
 import {
   CircleStencil,
   Cropper,
@@ -91,8 +91,6 @@ export const ImageEditor: FC<Props> = ({
       height: (visibleArea || imageSize).height,
     };
   };
-
-  useEffect(() => {}, [isFilterActive, mode]);
 
   return (
     <div className={cn("border text-teal-400")}>
