@@ -2,11 +2,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useClearImage } from "@/lib/hooks/useClearImage";
 import toastConfig from "@/lib/toastonfig";
-
 import { cn } from "@/lib/utils";
 import { imagePreview, imageSource, imageType, origine } from "@/store/store";
 import { useAtomValue, useSetAtom } from "jotai";
-import { FC, useRef, useState } from "react";
+import { FC, JSX, useRef, useState } from "react";
 import {
   CircleStencil,
   Coordinates,
@@ -18,9 +17,8 @@ import {
 } from "react-advanced-cropper";
 import "react-advanced-cropper/dist/style.css";
 import { toast } from "react-toastify";
-//import "react-advanced-cropper/dist/themes/compact.css";
 
-const CropperView: FC = (): React.JSX.Element => {
+const CropperView: FC = (): JSX.Element => {
   const img = useAtomValue(imageSource);
   const originePage = useAtomValue(origine);
   const type = useAtomValue(imageType);
@@ -85,12 +83,6 @@ const CropperView: FC = (): React.JSX.Element => {
             ?.toBlob(setObjectBlobCallback, `image/${type}`, 1);
   };
 
-  /*   useEffect(() => {
-    console.log("from effect preview", preview);
-    console.log("from effect origine page", originePage);
-    console.log("from effect type", type);
-  }, [preview, originePage, type]); */
-
   return (
     <Card className="w-full max-w-4xl">
       <CardHeader>
@@ -120,7 +112,6 @@ const CropperView: FC = (): React.JSX.Element => {
           </Button>
         </div>
       </CardHeader>
-      // "grid gap-4 justify-items-center"
       <CardContent className="flex flex-col justify-items-center gap-4">
         <div className={cn("relative h-[600px] w-full")}>
           <Cropper

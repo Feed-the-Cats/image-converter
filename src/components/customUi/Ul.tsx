@@ -1,18 +1,17 @@
 import { cn } from "@/lib/utils";
+import { FC, HTMLAttributes, JSX } from "react";
 
-type UlType = {
-  children: React.ReactNode;
-  className?: string;
+interface UlType extends HTMLAttributes<HTMLUListElement> {
   none?: boolean;
   decimal?: boolean;
-};
+}
 
-export const Ul = ({
+export const Ul: FC<UlType> = ({
   children,
-  className = "",
+  className,
   none = false,
   decimal = false,
-}: UlType) => {
+}): JSX.Element => {
   return (
     <ul
       className={cn(

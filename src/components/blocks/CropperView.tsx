@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useClearImage } from "@/lib/hooks/useClearImage";
 import toastConfig from "@/lib/toastonfig";
-
 import { cn } from "@/lib/utils";
 import {
   asFilterActive,
@@ -21,7 +20,6 @@ import {
 import "react-advanced-cropper/dist/style.css";
 import { toast } from "react-toastify";
 import { ImageEditor } from "../customCropper/imageEditor/ImageEditor";
-//import "react-advanced-cropper/dist/themes/compact.css";
 
 type CropperViewProps = {
   asFilter?: boolean;
@@ -34,11 +32,7 @@ const CropperView: FC<CropperViewProps> = ({ asFilter }): JSX.Element => {
   const setPreview = useSetAtom(imagePreview);
   const previewRef = useRef<CropperPreviewRef>(null);
   const cropperRef = useRef<CropperRef>(null);
-  // const [, setCoordinate] = useState<Coordinates | null>(null);
-  // const [, setCropperImage] = useState<string | undefined>("");
-  // const [tencil, setTencil] = useState<"circle" | "square">("square");
   const stencil = useAtomValue(cropStencil);
-
   const setClearImage = useClearImage();
 
   asFilter ? setIsFilterActive(true) : setIsFilterActive(false);
@@ -79,7 +73,6 @@ const CropperView: FC<CropperViewProps> = ({ asFilter }): JSX.Element => {
   };
 
   const downloadImage = () => {
-    console.log(cropperRef.current);
     cropperRef.current && originePage === "imageUri"
       ? cropImage()
       : cropperRef.current && originePage === "cropper"
@@ -91,32 +84,6 @@ const CropperView: FC<CropperViewProps> = ({ asFilter }): JSX.Element => {
             ?.toBlob(setObjectBlobCallback, `image/${type}`, 1);
   };
 
-  /*   useEffect(() => {
-    asFilter ? setIsFilterActive(true) : setIsFilterActive(false);
-
-    console.log("isFilterActive from cropperView", isFilterActive);
-    return () => {
-      setIsFilterActive(false);
-    };
-  }, [isFilterActive]); */
-
-  /* 
-  const onChange = (cropper: CropperRef) => {
-    setCoordinate(cropper.getCoordinates());
-    setCropperImage(cropper.getCanvas()?.toDataURL());
-    }; */
-
-  /*   const onUpdate = () => {
-      previewRef.current?.refresh();
-    };
-   */
-
-  /*   useEffect(() => {
-    console.log("from effect preview", preview);
-    console.log("from effect origine page", originePage);
-    console.log("from effect type", type);
-  }, [preview, originePage, type]); */
-
   return (
     <Card className="w-full max-w-4xl">
       <CardHeader>
@@ -125,62 +92,15 @@ const CropperView: FC<CropperViewProps> = ({ asFilter }): JSX.Element => {
         </CardTitle>
         {!isFilterActive ? (
           <div className={cn("flex gap-2")}>
-            {/*             <Button
-              className={cn("w-full")}
-              onClick={() => setTencil("square")}
-            >
-              square
-            </Button>
-            <Button
-              className={cn("w-full")}
-              onClick={() => setTencil("circle")}
-            >
-              circle
-            </Button> */}
-
-            {/* {originePage === "cropper" ? (
-              <Button
-                className={cn(actionButtonsClass)}
-                onClick={downloadImage}
-              >
-                download
-              </Button>
-            ) : (
-              <Button
-                className={cn(actionButtonsClass)}
-                onClick={downloadImage}
-              >
-                crop
-              </Button>
-            )} */}
-            <Button className={cn("btn-teal")} onClick={setClearImage}>
+            <Button variant={"teal"} onClick={setClearImage}>
               Clear
             </Button>
           </div>
         ) : null}
       </CardHeader>
-      {/* "grid gap-4 justify-items-center" */}
       <CardContent className="flex flex-col justify-items-center gap-4">
         <div className={cn("relative h-[600px] w-full")}>
-          {/*           <Cropper
-            ref={cropperRef}
-            src={img}
-            className={cn("cropper", "w-full h-[600px]")}
-            onChange={onChange}
-            onUpdate={onUpdate}
-            crossOrigin="anonymous"
-            stencilProps={{
-              grid: true,
-            }}
-            stencilComponent={
-              tencil === "circle" ? CircleStencil : RectangleStencil
-            }
-          /> */}
-          <ImageEditor
-            /*   img={img} */
-            allRefs={allRefs}
-            downloadImage={downloadImage}
-          />
+          <ImageEditor allRefs={allRefs} downloadImage={downloadImage} />
         </div>
         <div className={cn("flex h-80 w-full items-center justify-center p-5")}>
           <div

@@ -1,6 +1,5 @@
 import { cn } from "@/lib/utils";
-import { ButtonHTMLAttributes, FC } from "react";
-// import "./Button.css";
+import { ButtonHTMLAttributes, FC, JSX } from "react";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   active?: boolean;
@@ -11,7 +10,7 @@ export const Button: FC<Props> = ({
   active,
   children,
   ...props
-}) => {
+}): JSX.Element => {
   return (
     <button
       className={cn(

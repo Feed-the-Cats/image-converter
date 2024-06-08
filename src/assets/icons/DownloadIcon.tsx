@@ -1,16 +1,15 @@
-import { FC } from "react";
+import { FC, JSX } from "react";
 
 interface Props {
   className?: string;
 }
 
-export const DownloadIcon: FC<Props> = ({ className }) => {
+export const DownloadIcon: FC<Props> = ({ className }): JSX.Element => {
   return (
     <svg
       className={className}
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
+      viewBox="0 0 24 24"
       xmlSpace="preserve"
     >
       <path d="M 20.057 12.152 C 19.448 12.152 18.839 12.609 18.839 13.372 L 18.839 17.635 C 18.839 18.549 18.229 19.158 17.316 19.158 L 6.96 19.158 C 6.045 19.158 5.436 18.549 5.436 17.635 L 5.436 13.372 C 5.436 12.762 4.98 12.152 4.219 12.152 C 3.456 12.152 3 12.609 3 13.372 L 3 17.635 C 3 19.767 4.675 21.443 6.809 21.443 L 17.164 21.443 C 19.295 21.443 20.97 19.767 20.97 17.635 L 20.97 13.372 C 21.123 12.609 20.667 12.152 20.057 12.152 Z" />

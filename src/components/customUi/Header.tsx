@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import React, { HTMLAttributes } from "react";
+import { FC, HTMLAttributes, JSX } from "react";
 import { H } from "./H";
 
 interface HeaderProps extends HTMLAttributes<HTMLElement> {
@@ -8,16 +8,18 @@ interface HeaderProps extends HTMLAttributes<HTMLElement> {
   subtitle?: string;
   classTitle?: string;
   classSubTitle?: string;
+  classOverlay?: string;
 }
 
-const Header: React.FC<HeaderProps> = ({
+const Header: FC<HeaderProps> = ({
   backgroundImage,
   title,
   subtitle,
   className,
   classTitle,
   classSubTitle,
-}) => {
+  classOverlay,
+}): JSX.Element => {
   return (
     <header
       className={cn(
@@ -29,14 +31,18 @@ const Header: React.FC<HeaderProps> = ({
       aria-labelledby="header-title"
       aria-describedby="header-subtitle"
     >
-      <div className="absolute left-0 top-0 h-full w-full bg-black bg-opacity-50" />
+      <div
+        className={cn(
+          "absolute left-0 top-0 h-full w-full bg-black bg-opacity-50",
+          classOverlay,
+        )}
+      />
       <div className="relative z-10 text-center">
         <H
           id="header-title"
           className={cn("m-0 text-4xl font-bold", classTitle)}
           title={title}
         />
-
         {subtitle && (
           <p id="header-subtitle" className={cn("mt-2 text-lg", classSubTitle)}>
             {subtitle}

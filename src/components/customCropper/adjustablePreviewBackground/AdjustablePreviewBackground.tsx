@@ -6,13 +6,11 @@ import {
   Size,
 } from "react-advanced-cropper";
 import { AdjustableImage } from "../adjustableImage/AdjustableImage";
-
 interface DesiredCropperRef {
   getState: () => CropperState;
   getTransitions: () => CropperTransitions;
   getImage: () => CropperImage;
 }
-
 interface Props {
   className?: string;
   cropper: DesiredCropperRef;

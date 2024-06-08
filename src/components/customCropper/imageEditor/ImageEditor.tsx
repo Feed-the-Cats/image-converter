@@ -1,5 +1,8 @@
+import { ResetIcon } from "@/assets/icons/ResetIcon";
+import { asFilterActive, cropStencil, imageSource } from "@/store/store";
 import cn from "classnames";
-import { RefObject, useEffect, useState } from "react";
+import { useAtomValue } from "jotai";
+import { RefObject, useEffect, useState, FC, JSX } from "react";
 import {
   CircleStencil,
   Cropper,
@@ -8,20 +11,13 @@ import {
   RectangleStencil,
   Size,
 } from "react-advanced-cropper";
-//import { AdjustablePreviewBackground } from '../adjustablePreviewBackground/AdjustablePreviewBackground';
-import { ResetIcon } from "@/assets/icons/ResetIcon";
-import { asFilterActive, cropStencil, imageSource } from "@/store/store";
-import { useAtomValue } from "jotai";
 import "react-advanced-cropper/dist/style.css";
 import { AdjustableCropperBackground } from "../adjustableCropperBackground/AdjustableCropperBackground";
 import { Button } from "../button/Button";
 import { Navigation } from "../navigation/NavigationCrop";
 import { Slider } from "../slider/Slider";
-import "./ImageEditor.css";
 
-// The polyfill for Safari browser. The dynamic require is needed to work with SSR
 if (typeof window !== "undefined") {
-  /* require('context-filter-polyfill'); */
   () => import("context-filter-polyfill");
 }
 
@@ -44,12 +40,16 @@ type Props = {
   allRefs: allRefsType;
 };
 
-export const ImageEditor: React.FC<Props> = ({ downloadImage, allRefs }) => {
-  // const originePage = useAtomValue(origine);
+export const ImageEditor: FC<Props> = ({
+  downloadImage,
+  allRefs,
+}): JSX.Element => {
   const isFilterActive = useAtomValue(asFilterActive);
   const [mode, setMode] = useState(isFilterActive ? "saturation" : "square");
   const image = useAtomValue(imageSource);
   const stencil = useAtomValue(cropStencil);
+  const cropperEnabled = !isFilterActive;
+  const { cropperRef, previewRef } = allRefs;
   const [adjustments, setAdjustments] = useState<adjusmentType>({
     brightness: 0,
     hue: 0,
@@ -58,8 +58,7 @@ export const ImageEditor: React.FC<Props> = ({ downloadImage, allRefs }) => {
     sepia: 0,
     invert: 0,
   });
-
-  const { cropperRef, previewRef } = allRefs;
+  const changed = Object.values(adjustments).some((el) => Math.floor(el * 100));
 
   const onChangeValue = (value: number) => {
     if (mode in adjustments) {
@@ -82,60 +81,9 @@ export const ImageEditor: React.FC<Props> = ({ downloadImage, allRefs }) => {
     });
   };
 
-  useEffect(() => {
-    console.log("isFilterActive", isFilterActive, "mode", mode);
-  }, [isFilterActive, mode]);
-
   const onUpdate = () => {
     previewRef.current?.refresh();
   };
-
-  const changed = Object.values(adjustments).some((el) => Math.floor(el * 100));
-
-  //const cropperEnabled = mode === "crop";
-  const cropperEnabled = !isFilterActive;
-
-  /*     const onUpload = (blob: string) => {
-      onReset();
-      setMode("crop");
-      setSrc(blob);
-    }; */
-
-  /*     const onDownload = () => {
-      if (cropperRef?.current) {
-        const newTab = window.open();
-        if (newTab) {
-          newTab.document.body.innerHTML = `<img src="${cropperRef?.current
-            .getCanvas()
-            ?.toDataURL()}"/>`;
-        }
-      }
-    }; */
-
-  /* const defaultVisibleArea = {
-    width: cropperRef?.current
-    ? (cropperRef?.current.getCanvas()?.width as number)
-      : 100,
-    height: cropperRef?.current
-      ? (cropperRef?.current.getCanvas()?.height as number)
-      : 100,
-    left: 0,
-    top: 0,
-  }; */
-
-  /*   if (cropperRef?.current) {
-    cropperRef?.current.setCoordinates({
-      width: cropperRef?.current.getCanvas()?.width,
-      height: cropperRef?.current.getCanvas()?.height,
-      left: 0,
-      top: 0,
-    });
-  } */
-
-  /*   type sizeType = {
-    imageSize: { width: number; height: number };
-    visibleArea: { width: number; height: number };
-  }; */
 
   const defaultSize = ({ imageSize, visibleArea }: any): Size => {
     return {
@@ -144,10 +92,7 @@ export const ImageEditor: React.FC<Props> = ({ downloadImage, allRefs }) => {
     };
   };
 
-  /*   const onChange = (cropper: CropperRef) => {
-    cropper.getCoordinates();
-    cropper.getCanvas()?.toDataURL();
-  }; */
+  useEffect(() => {}, [isFilterActive, mode]);
 
   return (
     <div className={cn("border text-teal-400")}>
@@ -194,19 +139,7 @@ export const ImageEditor: React.FC<Props> = ({ downloadImage, allRefs }) => {
           <ResetIcon />
         </Button>
       </div>
-      <Navigation
-        mode={mode}
-        onChange={setMode}
-        // onUpload={onUpload}
-        onDownload={downloadImage}
-      />
-      {/* <CropperPreview
-        className={cn("h-11 w-11 bg-black border absolute left-5 top-5 rounded-full")}
-        cropperRef={previewRef}
-        cropper={cropperRef}
-        backgroundComponent={AdjustablePreviewBackground}
-        backgroundProps={adjustments}
-      /> */}
+      <Navigation mode={mode} onChange={setMode} onDownload={downloadImage} />
     </div>
   );
 };

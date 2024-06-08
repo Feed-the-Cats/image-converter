@@ -1,16 +1,15 @@
-import { FC } from "react";
+import { FC, JSX } from "react";
 
 interface Props {
   className?: string;
 }
 
-export const SaturationIcon: FC<Props> = ({ className }) => {
+export const SaturationIcon: FC<Props> = ({ className }): JSX.Element => {
   return (
     <svg
       className={className}
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
+      viewBox="0 0 24 24"
       xmlSpace="preserve"
     >
       <path d="M14.2 16c.5-.5.8-1.2.8-2 0-.3 0-.6-.1-.9-.3.1-.5.1-.8.1-1.3 0-2.2-.7-2.9-1.3-.2-.2-.8-.6-.9-.6 0 0-.1 0-.3.1-.5 1-.8 1.8-.8 2.5s.3 1.4.8 2c1 1.3 3 1.3 4.2.1z" />

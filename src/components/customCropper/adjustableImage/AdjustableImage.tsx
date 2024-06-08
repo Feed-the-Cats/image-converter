@@ -1,7 +1,6 @@
 import cn from "classnames";
 import { CSSProperties, forwardRef, useLayoutEffect, useRef } from "react";
 import { CropperSource, mergeRefs } from "react-advanced-cropper";
-// import "./AdjustableImage.css";
 
 interface Props {
   src?: string;

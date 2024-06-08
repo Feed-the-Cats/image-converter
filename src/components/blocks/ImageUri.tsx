@@ -25,6 +25,7 @@ import { Upload } from "lucide-react";
 import {
   ChangeEvent,
   FC,
+  JSX,
   MouseEvent,
   useCallback,
   useEffect,
@@ -36,15 +37,15 @@ import { toast } from "react-toastify";
 type isActiveType = { isActive: "imageUri" | "cropper" | "blob" };
 type imgToBlobType = (imageUrl: any, isInput?: boolean) => Promise<void>;
 
-const ImageUri: FC<isActiveType> = ({ isActive }): React.JSX.Element => {
-  const setBase64Image = useSetAtom(image64);
+const ImageUri: FC<isActiveType> = ({ isActive }): JSX.Element => {
+  const inputRef = useRef<HTMLInputElement>(null);
   const [type, setImageType] = useAtom(imageType);
   const [imageUrl, setImageUrl] = useAtom(imageSource);
   const preview = useAtomValue(imagePreview);
   const [originePage, setOriginePage] = useAtom(origine);
   const [isDisabled, setIsDisabled] = useAtom(isElementsDisabled);
+  const setBase64Image = useSetAtom(image64);
   const setClearImage = useClearImage();
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
@@ -52,7 +53,6 @@ const ImageUri: FC<isActiveType> = ({ isActive }): React.JSX.Element => {
       const reader = new FileReader();
       const [, type] = file.type.split("/");
       setImageType(type);
-      console.log(type);
       setImageUrl("");
       setBase64Image("");
       setOriginePage(isActive);
@@ -66,7 +66,6 @@ const ImageUri: FC<isActiveType> = ({ isActive }): React.JSX.Element => {
       };
       reader.onerror = (error) => {
         toast.error("An error has occurred :", toastConfig);
-        console.log(error);
       };
     },
     [
@@ -89,7 +88,6 @@ const ImageUri: FC<isActiveType> = ({ isActive }): React.JSX.Element => {
       const reader = new FileReader();
       const [, type] = blob.type.split("/");
       setImageType(type);
-      /* console.log(type); */
       reader.onload = () => {
         const base64String = reader.result as string;
         isInput ? setImageUrl(base64String) : setBase64Image(base64String);
@@ -98,7 +96,6 @@ const ImageUri: FC<isActiveType> = ({ isActive }): React.JSX.Element => {
       if (!isInput) toast.success("Image converted", toastConfig);
     } catch (error) {
       toast.error("An error has occurred :", toastConfig);
-      //console.error("An error has occurred :", error);
     }
   };
 
@@ -111,17 +108,13 @@ const ImageUri: FC<isActiveType> = ({ isActive }): React.JSX.Element => {
     if (value.length && !/data:image/.test(value)) {
       imgToBlob(value, true);
     }
-
-    /* getImageType(value); */
     setImageUrl(value);
     setOriginePage(isActive);
-    /*  console.log("imput change", originePage); */
     setIsDisabled(originePage !== isActive);
   };
 
   const inputClick = ({ currentTarget }: MouseEvent<HTMLInputElement>) => {
     if (currentTarget.value.length) currentTarget.value = "";
-    /* setBase64Image(""); */
     setClearImage();
   };
 
@@ -186,7 +179,6 @@ const ImageUri: FC<isActiveType> = ({ isActive }): React.JSX.Element => {
                     ? "stroke-foreground"
                     : "stroke-muted-foreground",
                 )}
-                /* style={isDragActive ? { stroke: "#ffffff" } : {}} */
               />
               {isDragActive ? (
                 <p>Drag the files here !</p>
@@ -233,7 +225,7 @@ const ImageUri: FC<isActiveType> = ({ isActive }): React.JSX.Element => {
               </Button>
               <Button
                 disabled={isDisabled}
-                className={cn("btn-teal")}
+                variant={"teal"}
                 onClick={setClearImage}
               >
                 Clear
@@ -251,7 +243,7 @@ const ImageUri: FC<isActiveType> = ({ isActive }): React.JSX.Element => {
               </Button>
               <Button
                 disabled={isDisabled}
-                className={cn("btn-teal")}
+                variant={"teal"}
                 onClick={setClearImage}
               >
                 Clear

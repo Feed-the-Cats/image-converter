@@ -1,6 +1,5 @@
 import cn from "classnames";
 import React, { PureComponent } from "react";
-import "./Slider.css";
 
 interface Props {
   className?: string;
@@ -93,15 +92,12 @@ export class Slider extends PureComponent<Props> {
   };
   render() {
     const { value = 0, className } = this.props;
-
     const handleInsideDot = this.state.width
       ? Math.abs(value) <= 16 / this.state.width
       : true;
 
     const fillWidth = `${Math.abs(value) * 50}%`;
-
     const fillLeft = `${50 * (1 - Math.abs(Math.min(0, value)))}%`;
-
     const formattedValue = `${value > 0 ? "+" : ""}${Math.round(100 * value)}`;
 
     return (

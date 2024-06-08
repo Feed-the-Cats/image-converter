@@ -6,10 +6,10 @@ import toastConfig from "@/lib/toastonfig";
 import { image64 } from "@/store/store.ts";
 import { useAtomValue } from "jotai";
 import { ClipboardCopy } from "lucide-react";
-import { FC } from "react";
+import { FC, JSX } from "react";
 import { toast } from "react-toastify";
 
-const Result: FC = (): React.JSX.Element => {
+const Result: FC = (): JSX.Element => {
   const imgB64 = useAtomValue(image64);
   const setClearImage = useClearImage();
 

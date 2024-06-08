@@ -2,9 +2,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { imageSource } from "@/store/store.ts";
 import { useAtomValue } from "jotai";
-import { FC } from "react";
+import { FC, JSX } from "react";
 
-const Image: FC = (): React.JSX.Element => {
+const Image: FC = (): JSX.Element => {
   const img = useAtomValue(imageSource);
 
   return (

@@ -4,11 +4,11 @@ import Filters from "@/roots/Filters";
 import Home from "@/roots/Home";
 import ImageToB64 from "@/roots/ImageToB64";
 import RootLayout from "@/roots/RootLayout";
-import { FC } from "react";
+import { FC, JSX } from "react";
 import {
-  createBrowserRouter,
   Navigate,
   RouterProvider,
+  createBrowserRouter,
 } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -44,7 +44,7 @@ const router = createBrowserRouter([
   },
 ]);
 
-const App: FC = (): React.JSX.Element => {
+const App: FC = (): JSX.Element => {
   return <RouterProvider router={router} />;
 };
 

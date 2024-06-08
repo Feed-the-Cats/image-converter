@@ -8,7 +8,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import { origine } from "@/store/store";
+import { homeOrigine } from "@/store/store";
 import { useAtomValue } from "jotai";
 import {
   Crop,
@@ -17,21 +17,18 @@ import {
   Filter,
   Home,
   PanelLeft,
-  Settings,
 } from "lucide-react";
-import { FC } from "react";
+import { FC, JSX } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const RootLayout: FC = (): React.JSX.Element => {
-  const originePage = useAtomValue(origine);
-  console.log("originePage", originePage);
+const RootLayout: FC = (): JSX.Element => {
+  const isHome = useAtomValue(homeOrigine);
   return (
     <>
       <TooltipProvider>
         <div className={cn("flex min-h-screen w-full flex-col bg-muted/40")}>
-          {/* <div className={cn("w-[200px] h-screen bg-slate-600")}></div> */}
           <div
             className={cn(
               "fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex",
@@ -51,7 +48,6 @@ const RootLayout: FC = (): React.JSX.Element => {
                 </TooltipTrigger>
                 <TooltipContent side="right">Home</TooltipContent>
               </Tooltip>
-
               <Tooltip>
                 <TooltipTrigger asChild>
                   <NavLink
@@ -107,26 +103,11 @@ const RootLayout: FC = (): React.JSX.Element => {
                 <TooltipContent side="right">Filters</TooltipContent>
               </Tooltip>
             </nav>
-            <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <NavLink
-                    to="#"
-                    className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-                  >
-                    <Settings className="h-5 w-5" />
-                    <span className="sr-only">Settings</span>
-                  </NavLink>
-                </TooltipTrigger>
-                <TooltipContent side="right">Settings</TooltipContent>
-              </Tooltip>
-            </nav>
           </div>
-
           <div
             className={cn(
               "flex flex-col gap-10 sm:pl-14",
-              originePage === "home" ? "gap-0" : "",
+              isHome === "home" ? "gap-0" : "",
             )}
           >
             <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/60 sm:h-auto sm:border-0 sm:px-6">
@@ -153,7 +134,6 @@ const RootLayout: FC = (): React.JSX.Element => {
                       <FileOutput className="h-5 w-5" />
                       image2b64
                     </NavLink>
-
                     <NavLink
                       to={"b64toimage"}
                       className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
