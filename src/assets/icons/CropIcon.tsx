@@ -4,7 +4,7 @@ interface Props {
   className?: string;
 }
 
-export const CropIcon: FC<Props> = ({ className }): JSX.Element => {
+const CropIcon: FC<Props> = ({ className }): JSX.Element => {
   return (
     <svg
       className={className}
@@ -16,3 +16,5 @@ export const CropIcon: FC<Props> = ({ className }): JSX.Element => {
     </svg>
   );
 };
+
+export default CropIcon;

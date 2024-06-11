@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/lib/utils";
 import { CSSProperties, forwardRef, useLayoutEffect, useRef } from "react";
 import { CropperSource, mergeRefs } from "react-advanced-cropper";
 

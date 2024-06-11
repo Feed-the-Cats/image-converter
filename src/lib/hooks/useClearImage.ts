@@ -26,4 +26,4 @@ const useClearImage = () => {
   return setClearImage;
 };
 
-export { useClearImage };
+export default useClearImage ;

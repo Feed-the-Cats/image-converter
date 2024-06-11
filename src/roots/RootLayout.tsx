@@ -1,4 +1,4 @@
-import { H } from "@/components/customUi/H";
+import { H } from "@/components/customUi";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
@@ -129,7 +129,7 @@ const RootLayout: FC = (): JSX.Element => {
                     </NavLink>
                     <NavLink
                       to={"image2b64"}
-                      className="flex items-center gap-4 px-2.5 text-foreground"
+                      className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
                     >
                       <FileOutput className="h-5 w-5" />
                       image2b64

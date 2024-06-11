@@ -1,13 +1,13 @@
-import { BrightnessIcon } from "@/assets/icons/BrightnessIcon";
-import { ContrastIcon } from "@/assets/icons/ContrastIcon";
-import { HueIcon } from "@/assets/icons/HueIcon";
-import { InvertIcon } from "@/assets/icons/InvertIcon";
-import { SaturationIcon } from "@/assets/icons/SaturationIcon";
-import { SepiaIcon } from "@/assets/icons/SepiaIcon";
+import {
+  BrightnessIcon,
+  ContrastIcon,
+  HueIcon,
+  InvertIcon,
+  SaturationIcon,
+  SepiaIcon,
+} from "@/assets/icons";
 import heroImage from "@/assets/images/hero.jpeg";
-import { H } from "@/components/customUi/H";
-import Header from "@/components/customUi/Header";
-import { Ul } from "@/components/customUi/Ul";
+import { H, Header, Ul } from "@/components/customUi";
 import { cn } from "@/lib/utils";
 import { homeOrigine, type HomeOrigineType } from "@/store/store";
 import { useSetAtom } from "jotai";

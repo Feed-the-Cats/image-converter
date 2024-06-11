@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/lib/utils";
 import React, { PureComponent } from "react";
 
 interface Props {

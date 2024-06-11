@@ -6,7 +6,7 @@ interface UlType extends HTMLAttributes<HTMLUListElement> {
   decimal?: boolean;
 }
 
-export const Ul: FC<UlType> = ({
+const Ul: FC<UlType> = ({
   children,
   className,
   none = false,
@@ -24,3 +24,5 @@ export const Ul: FC<UlType> = ({
     </ul>
   );
 };
+
+export default Ul;

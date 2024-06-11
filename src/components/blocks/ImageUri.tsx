@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useClearImage } from "@/lib/hooks/useClearImage";
+import { useClearImage } from "@/lib/hooks";
 import toastConfig from "@/lib/toastonfig";
 import { cn } from "@/lib/utils";
 import {

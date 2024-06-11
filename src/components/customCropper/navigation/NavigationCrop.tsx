@@ -1,16 +1,18 @@
-import { BrightnessIcon } from "@/assets/icons/BrightnessIcon";
-import { CheckIcon } from "@/assets/icons/CheckIcon";
-import { CircleIcon } from "@/assets/icons/CircleIcon";
-import { ContrastIcon } from "@/assets/icons/ContrastIcon";
-import { CropIcon } from "@/assets/icons/CropIcon";
-import { DownloadIcon } from "@/assets/icons/DownloadIcon";
-import { HueIcon } from "@/assets/icons/HueIcon";
-import { InvertIcon } from "@/assets/icons/InvertIcon";
-import { SaturationIcon } from "@/assets/icons/SaturationIcon";
-import { SepiaIcon } from "@/assets/icons/SepiaIcon";
-import { SquareIcon } from "@/assets/icons/SquareIcon";
+import {
+  BrightnessIcon,
+  CheckIcon,
+  CircleIcon,
+  ContrastIcon,
+  CropIcon,
+  DownloadIcon,
+  HueIcon,
+  InvertIcon,
+  SaturationIcon,
+  SepiaIcon,
+  SquareIcon,
+} from "@/assets/icons";
+import { cn } from "@/lib/utils";
 import { asFilterActive, cropStencil, origine } from "@/store/store";
-import cn from "classnames";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { FC, JSX, useEffect } from "react";
 import { Button } from "../button/Button";
@@ -102,21 +104,21 @@ export const Navigation: FC<Props> = ({
               <ContrastIcon className="h-6 w-6" />
             </Button>
             <Button
-              className={cn("mx-2 sm:mx-1")}
+              className={cn("mx-1 sm:mx-2")}
               active={mode === "hue"}
               onClick={() => onChange?.("hue")}
             >
               <HueIcon className="h-6 w-6" />
             </Button>
             <Button
-              className={cn("mx-2 sm:mx-1")}
+              className={cn("mx-1 sm:mx-2")}
               active={mode === "sepia"}
               onClick={() => onChange?.("sepia")}
             >
               <SepiaIcon className="h-6 w-6" />
             </Button>
             <Button
-              className={cn("mx-2 sm:mx-1")}
+              className={cn("mx-1 sm:mx-2")}
               active={mode === "invert"}
               onClick={() => onChange?.("invert")}
             >
@@ -126,7 +128,7 @@ export const Navigation: FC<Props> = ({
         ) : (
           <>
             <Button
-              className={cn("mx-2 sm:mx-1")}
+              className={cn("mx-1 sm:mx-2")}
               active={mode === "square"}
               onClick={() => {
                 onChange?.("square"), setStencil("square");
@@ -135,7 +137,7 @@ export const Navigation: FC<Props> = ({
               <SquareIcon className="h-6 w-6" />
             </Button>
             <Button
-              className={cn("mx-2 sm:mx-1")}
+              className={cn("mx-1 sm:mx-2")}
               active={mode === "circle"}
               onClick={() => {
                 onChange?.("circle"), setStencil("circle");

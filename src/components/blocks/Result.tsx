@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { useClearImage } from "@/lib/hooks/useClearImage";
+import { useClearImage } from "@/lib/hooks";
 import toastConfig from "@/lib/toastonfig";
 import { image64 } from "@/store/store.ts";
 import { useAtomValue } from "jotai";

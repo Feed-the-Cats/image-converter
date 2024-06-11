@@ -4,7 +4,7 @@ interface Props {
   className?: string;
 }
 
-export const UploadIcon: FC<Props> = ({ className }): JSX.Element => {
+const UploadIcon: FC<Props> = ({ className }): JSX.Element => {
   return (
     <svg
       className={className}
@@ -17,3 +17,5 @@ export const UploadIcon: FC<Props> = ({ className }): JSX.Element => {
     </svg>
   );
 };
+
+export default UploadIcon;

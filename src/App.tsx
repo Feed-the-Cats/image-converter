@@ -1,9 +1,12 @@
-import B64toBlob from "@/roots/B64ToBlob";
-import CropImage from "@/roots/CropImage";
-import Filters from "@/roots/Filters";
-import Home from "@/roots/Home";
-import ImageToB64 from "@/roots/ImageToB64";
-import RootLayout from "@/roots/RootLayout";
+import {
+  B64toBlob,
+  CropImage,
+  ErrorPage,
+  Filters,
+  Home,
+  ImageToB64,
+  RootLayout,
+} from "@/roots";
 import { FC, JSX } from "react";
 import {
   Navigate,
@@ -15,6 +18,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,

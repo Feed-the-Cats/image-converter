@@ -1,7 +1,5 @@
-import Image from "@/components/blocks/Image";
-import ImageUri from "@/components/blocks/ImageUri";
-import Result from "@/components/blocks/Result";
-import useDocumentHead from "@/lib/hooks/useDocumentHead";
+import { Image, ImageUri, Result } from "@/components/blocks";
+import { useDocumentHead } from "@/lib/hooks";
 import { image64, imageSource } from "@/store/store";
 import { useAtomValue } from "jotai";
 import { FC, JSX } from "react";

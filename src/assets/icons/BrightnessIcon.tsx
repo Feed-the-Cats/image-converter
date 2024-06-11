@@ -4,7 +4,7 @@ interface Props {
   className?: string;
 }
 
-export const BrightnessIcon: FC<Props> = ({ className }): JSX.Element => {
+const BrightnessIcon: FC<Props> = ({ className }): JSX.Element => {
   return (
     <svg
       className={className}
@@ -16,3 +16,5 @@ export const BrightnessIcon: FC<Props> = ({ className }): JSX.Element => {
     </svg>
   );
 };
+
+export default BrightnessIcon;

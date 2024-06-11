@@ -4,7 +4,7 @@ interface Props {
   className?: string;
 }
 
-export const SepiaIcon: FC<Props> = ({ className }): JSX.Element => {
+const SepiaIcon: FC<Props> = ({ className }): JSX.Element => {
   return (
     <svg
       className={className}
@@ -16,3 +16,5 @@ export const SepiaIcon: FC<Props> = ({ className }): JSX.Element => {
     </svg>
   );
 };
+
+export default SepiaIcon;

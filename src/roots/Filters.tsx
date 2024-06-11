@@ -1,5 +1,5 @@
-import CropperView from "@/components/blocks/CropperView";
-import useDocumentHead from "@/lib/hooks/useDocumentHead";
+import {CropperView} from "@/components/blocks";
+import {useDocumentHead} from "@/lib/hooks";
 import { imageSource } from "@/store/store";
 import { useAtomValue } from "jotai";
 import { FC, JSX } from "react";

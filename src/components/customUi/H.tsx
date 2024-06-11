@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 import { FC, HTMLAttributes, JSX, forwardRef } from "react";
 
-const headingVariants = cva("heading", {
+export const headingVariants = cva("heading", {
   variants: {
     heading: {
       h1: "my-5 text-3xl",
@@ -32,7 +32,7 @@ export interface HeadingProps
   h?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 }
 
-const H: FC<HeadingProps> = forwardRef<HTMLHeadingElement, HeadingProps>(
+export const H: FC<HeadingProps> = forwardRef<HTMLHeadingElement, HeadingProps>(
   ({ className, h, variant, title, ...props }, ref): JSX.Element => {
     const Head = !h ? "h1" : h;
 
@@ -47,5 +47,3 @@ const H: FC<HeadingProps> = forwardRef<HTMLHeadingElement, HeadingProps>(
     );
   },
 );
-
-export { H, headingVariants };

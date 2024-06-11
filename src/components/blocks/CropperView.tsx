@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useClearImage } from "@/lib/hooks/useClearImage";
+import { useClearImage } from "@/lib/hooks";
 import toastConfig from "@/lib/toastonfig";
 import { cn } from "@/lib/utils";
 import {
@@ -99,7 +99,7 @@ const CropperView: FC<CropperViewProps> = ({ asFilter }): JSX.Element => {
         ) : null}
       </CardHeader>
       <CardContent className="flex flex-col justify-items-center gap-4">
-        <div className={cn("relative h-[600px] w-full")}>
+        <div className={cn("relative w-full")}>
           <ImageEditor allRefs={allRefs} downloadImage={downloadImage} />
         </div>
         <div className={cn("flex h-80 w-full items-center justify-center p-5")}>
