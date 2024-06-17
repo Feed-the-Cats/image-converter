@@ -98,11 +98,11 @@ const CropperView: FC<CropperViewProps> = ({ asFilter }): JSX.Element => {
           </div>
         ) : null}
       </CardHeader>
-      <CardContent className="flex flex-col justify-items-center gap-4">
+      <CardContent className="flex flex-col justify-items-center gap-8">
         <div className={cn("relative w-full")}>
           <ImageEditor allRefs={allRefs} downloadImage={downloadImage} />
         </div>
-        <div className={cn("flex h-80 w-full items-center justify-center p-5")}>
+        <div className={cn("flex h-80 w-full items-center justify-center")}>
           <div
             className={cn(
               stencil === "circle"

@@ -23,16 +23,14 @@ const ErrorPage: FC = (): JSX.Element => {
   useDocumentHead(head);
 
   return (
-    /*font-size: 100px;
-  font-weight: 900;*/
     <div className="flex h-screen w-screen flex-col items-center justify-center">
       <H className="text-8xl" title="Oops!" />
       <p>Sorry, an unexpected error has occurred.</p>
       {isError ? (
         <>
-          <H h="h1" className="text-8xl font-black" title={`${error.status}`} />
+          <p className="my-5 text-8xl font-black">{error.status}</p>
           <br />
-          <H h="h1" className="text-3xl" title={`${error.statusText}`} />
+          <H h="h2" className="my-5 text-3xl" title={`${error.statusText}`} />
           <br />
         </>
       ) : null}

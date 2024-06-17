@@ -94,7 +94,7 @@ export const ImageEditor: FC<Props> = ({
 
   return (
     <div className={cn("border text-teal-400")}>
-      <div className={cn("relative max-h-screen bg-card")}>
+      <div className={cn("relative h-[500px] max-h-screen bg-card")}>
         <Cropper
           src={image}
           defaultSize={defaultSize}
